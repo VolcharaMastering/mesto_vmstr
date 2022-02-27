@@ -32,10 +32,15 @@
 .header_position{
     margin: 45px 0 40px;
 }
-
+@media screen and (max-width: 425px){
+    .header_position{
+        margin: 28px 0px 41px 16px;
+    }
+}
 .logo{
     width: 142px;
     height: 33px;
+    fill: white;
     margin: 0;
 }
 @media screen and (max-width: 425px) {
@@ -43,6 +48,10 @@
         width: 103.74px;
         height: 24.4px;
     }
+}
+.logo:hover{
+    fill: black;
+    cursor: pointer;
 }
 
 .profile{
@@ -53,11 +62,22 @@
     align-items: center;
     margin: 0;
 }
+@media screen and (max-width: 675px){
+    .profile{
+        flex-direction: column;
+    }
+}
 .profile__user{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative; 
     margin: 0;
+}
+@media screen and (max-width: 675px){
+    .profile__user{
+        flex-direction: column;
+    }
 }
 .profile__avatar{
     width: 120px;
@@ -67,44 +87,101 @@
     border-radius: 100%;
     margin: 0 30px 0 0;
 }
-.profile__info{
-
+@media screen and (max-width: 675px){
+    .profile__avatar{
+        margin: 0;
+    }
 }
 .profile__name{
     font-size: 42px;
     line-height: 48px;
     font-weight: 500;
-    margin: 0;
+    margin: 0 0 7px;
+}
+@media screen and (max-width: 675px){
+    .profile__name{
+        margin: 20px 0 0;
+    }
+}
+@media screen and (max-width: 425px){
+    .profile__name{
+        font-size: 27px;
+    }
 }
 .edit-button{
     width: 24px;
     height: 24px;
+    position: absolute;
     background-image: url(../images/editButton.svg);
-    align-self: flex-start;
-    margin: 25 0 0 18;
-
+    align-self: flex-start;    
+    right: -43px;
+    top: 40px;
 }
+@media screen and (max-width: 675px){
+    .edit-button{
+        top: 162px;
+    }
+}
+@media screen and (max-width: 425px){
+    .edit-button {
+        right: -34px;
+        top: 154px;
+        background-size: 70%;
+        background-repeat: no-repeat;
+    }
+}
+.edit-button:hover{
+    background-image: url(../images/EditButtonHover.svg);
+    cursor: pointer;
+}
+
 .profile__description{
     font-size: 18px;
     font-weight: 400;
+    margin: 0;
 }
-
+@media screen and (max-width: 425px){
+    .profile__description{
+        text-align: center;
+        font-size: 14px;
+    }
+}
 .add-button{
-    height: 50px;
-    width: 150px;
+    height: 48px;
+    width: 146px;
     border: 2px solid white;
     background-image: url(../images/AddButton.svg);
     background-position: center;
     background-repeat: no-repeat;
 }
-
+@media screen and (max-width: 675px){
+    .add-button{
+        margin-top: 30px;
+    }
+}
+@media screen and (max-width: 675px){
+    .add-button{
+        width: 100%;
+    }
+}
+.add-button:hover{
+    border: 1px solid white;
+    background-image: url(../images/AddButtonHover.svg);
+    cursor: pointer;
+}
 .photos{
     width: 100%;
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, 282px);
     gap: 20px 17px;
     margin: 0;
     padding-top: 50px;
+}
+@media screen and (max-width: 675px){
+    .photos{
+        padding-top: 35px;
+    }
 }
 .card{
     width: 282px;
@@ -112,7 +189,7 @@
     background-color: #FFFFFF;
     color: #000000;
     overflow: hidden;
-    border-radius: 5%;
+    border-radius: 3%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -124,7 +201,51 @@
     width: 100%;
     margin: 0;
 }
+.card__caption{
+    width: 241px;
+    height: 28px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 25px 20px 0px 21px;
+
+}
 .card__name{
+    max-width: 198px;
     font-size: 24px;
     font-weight: 900;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.card__like{
+    width: 22px;
+    height: 19px;
+    background-image: url(../images/like.svg);
+    margin: 0;
+}
+.card__like:hover{
+    background-image: url(../images/likeHover.svg);
+    cursor: pointer;
+}
+.footer{
+    width: 100%;
+    padding: 51px 0 37px;
+    margin: 0;
+}
+@media screen and (max-width: 425px){
+    .footer{
+        padding: 35px 0 20px;
+    }
+}
+.footer__label{
+    color: #545454;
+    font-size: 18px;
+    font-weight: 400;
+}
+@media screen and (max-width: 425px){
+    .footer__label{
+        font-size: 14px;
+    }
 }
