@@ -249,3 +249,24 @@
         font-size: 14px;
     }
 }
+
+.popup{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+    padding-top: 195px;
+    margin: 0;
+}
+.popup__profile{
+    width: 34%;
+    background-color: white;
+    color: #000;
+    border-radius: 3%;
+    position: relative;
+
+}
