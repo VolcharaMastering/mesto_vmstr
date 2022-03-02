@@ -252,21 +252,118 @@
 
 .popup{
     position: fixed;
-    display: flex;
+    display: none;
     justify-content: center;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, .5);
-    padding-top: 195px;
     margin: 0;
 }
+.popup_active{
+    display: flex;
+}
 .popup__profile{
-    width: 34%;
+    width: 430px;
+    height: 330px;
     background-color: white;
     color: #000;
     border-radius: 3%;
     position: relative;
-
+}
+@media screen and (max-width: 675px){
+    .popup__profile{
+        width: 282px;
+        height: 322px;
+    }
+}
+.popup__profile_position{
+    margin: 195px auto 0 auto;
+}
+@media screen and (max-width: 675px){
+    .popup__profile_position{
+        margin-top: 123px;
+    }
+}
+.popup__header{
+    font-size: 24px;
+    font-weight: 900;
+    margin: 34px 36px 0 36px;
+}
+@media screen and (max-width: 675px){
+    .popup__header{
+        font-size: 18px;
+        margin: 25px 22px 0 22px;
+    }
+}
+.popup__name{
+    width: 358px;
+    height: 27px;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 45px 36px 0 36px;
+    border: 0;
+    border-bottom: 1px solid black;
+}
+@media screen and (max-width: 675px){
+    .popup__name{
+        width: 238px;
+        margin: 74px 22px 0 22px;
+    }
+}
+.popup__description{
+    width: 358px;
+    height: 27px;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 27px 36px 0 36px;
+    border: 0;
+    border-bottom: 1px solid black;
+}
+@media screen and (max-width: 675px){
+    .popup__description{
+        width: 238px;
+        margin: 26px 22px 0 22px;
+    }
+}
+.popup__save{
+    width: 358px;
+    height: 50px;
+    font-size: 18px;
+    font-weight: 400;
+    background-color: #000000;
+    color: #FFFFFF;
+    margin: 48px 36px 0 36px;
+    border: none;
+}
+@media screen and (max-width: 675px){
+    .popup__save{
+        width: 238px;
+        height: 46px;
+        font-size: 14px;
+        margin: 45px 22px 0 22px;
+    }
+}
+.popup__close{
+    width: 32px;
+    height: 32px;
+    background-image: url(../images/CloseIcon.svg);
+    background-color: rgba(0, 0, 0, 0);
+    background-size: contain;
+    border: none;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+}
+.popup__close:hover{
+    background-image: url(../images/CloseIconHover.png);
+}
+@media screen and (max-width: 675px){
+    .popup__close{
+        width: 20px;
+        height: 20px;
+        top: -36px;
+        right: 0px;
+    }
 }
