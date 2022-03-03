@@ -3,8 +3,7 @@
     height: 24px;
     position: absolute;
     background-image: url(../../images/editButton.svg);
-    align-self: flex-start;    
-    right: -43px;
+    align-self: flex-start;
     top: 40px;
 }
 @media screen and (max-width: 675px){
