@@ -1,0 +1,10 @@
+.footer__label{
+    color: #545454;
+    font-size: 18px;
+    font-weight: 400;
+}
+@media screen and (max-width: 425px){
+    .footer__label{
+        font-size: 14px;
+    }
+}

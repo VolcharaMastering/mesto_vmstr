@@ -1,0 +1,23 @@
+.add-button{
+    height: 48px;
+    width: 146px;
+    border: 2px solid white;
+    background-image: url(../../images/AddButton.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+@media screen and (max-width: 675px){
+    .add-button{
+        margin-top: 30px;
+    }
+}
+@media screen and (max-width: 675px){
+    .add-button{
+        width: 100%;
+    }
+}
+.add-button:hover{
+    border: 1px solid white;
+    background-image: url(../../images/AddButtonHover.svg);
+    cursor: pointer;
+}

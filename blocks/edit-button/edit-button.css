@@ -1,0 +1,26 @@
+.edit-button{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    background-image: url(../../images/editButton.svg);
+    align-self: flex-start;    
+    right: -43px;
+    top: 40px;
+}
+@media screen and (max-width: 675px){
+    .edit-button{
+        top: 162px;
+    }
+}
+@media screen and (max-width: 425px){
+    .edit-button {
+        right: -34px;
+        top: 154px;
+        background-size: 70%;
+        background-repeat: no-repeat;
+    }
+}
+.edit-button:hover{
+    background-image: url(../../images/EditButtonHover.svg);
+    cursor: pointer;
+}
