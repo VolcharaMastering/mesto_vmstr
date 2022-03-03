@@ -93,10 +93,19 @@
     }
 }
 .profile__name{
+    max-width: 485px;
     font-size: 42px;
     line-height: 48px;
     font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     margin: 0 0 7px;
+}
+@media screen and (max-width: 870px){
+    .profile__name{
+        max-width: 290px;
+    }
 }
 @media screen and (max-width: 675px){
     .profile__name{
@@ -105,6 +114,7 @@
 }
 @media screen and (max-width: 425px){
     .profile__name{
+        max-width: 250px;
         font-size: 27px;
     }
 }
@@ -136,12 +146,22 @@
 }
 
 .profile__description{
+    max-width: 485px;
     font-size: 18px;
     font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     margin: 0;
+}
+@media screen and (max-width: 870px){
+    .profile__description{
+        max-width: 290px;
+    }
 }
 @media screen and (max-width: 425px){
     .profile__description{
+        max-width: 250px;
         text-align: center;
         font-size: 14px;
     }
@@ -228,6 +248,9 @@
 .card__like:hover{
     background-image: url(../images/likeHover.svg);
     cursor: pointer;
+}
+.card__like:active{
+    background-image: url(../images/likeSelected.svg);
 }
 .footer{
     width: 100%;
@@ -345,6 +368,10 @@
         margin: 45px 22px 0 22px;
     }
 }
+.popup__save:hover{
+    cursor: pointer;
+    opacity: 80%;
+}
 .popup__close{
     width: 32px;
     height: 32px;
@@ -358,6 +385,7 @@
 }
 .popup__close:hover{
     background-image: url(../images/CloseIconHover.png);
+    cursor: pointer;
 }
 @media screen and (max-width: 675px){
     .popup__close{
