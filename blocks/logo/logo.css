@@ -2,7 +2,7 @@
 .logo{
     width: 142px;
     height: 33px;
-    fill: white;
+    background-image: url(../../images/logo.svg);
     margin: 0;
 }
 @media screen and (max-width: 425px) {
@@ -12,6 +12,6 @@
     }
 }
 .logo:hover{
-    fill: black;
+    background-image: url(../../images/logoHover.svg);
     cursor: pointer;
 }
