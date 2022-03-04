@@ -2,6 +2,8 @@
 .logo{
     width: 142px;
     height: 33px;
+    background-repeat: no-repeat;
+    background-size: contain;
     background-image: url(../../images/logo.svg);
     margin: 0;
 }
@@ -10,8 +12,4 @@
         width: 103.74px;
         height: 24.4px;
     }
-}
-.logo:hover{
-    background-image: url(../../images/logoHover.svg);
-    cursor: pointer;
 }

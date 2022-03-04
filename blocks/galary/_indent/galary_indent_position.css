@@ -1,0 +1,10 @@
+
+.galary_indent_position{
+    margin-top: 74px;
+}
+
+@media screen and (max-width: 425px){
+    .galary_indent_position{
+        margin-top: 56px;
+    }
+}
