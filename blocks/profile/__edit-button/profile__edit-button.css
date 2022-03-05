@@ -1,26 +1,28 @@
-.edit-button{
+.profile__edit-button{
     width: 24px;
     height: 24px;
     position: absolute;
-    background-image: url(../../images/editButton.svg);
+    background-image: url(../../../images/editButton.svg);
+    background-color: transparent;
+    border: none;
     align-self: flex-start;
     right: -43px;
     top: 40px;
 }
 @media screen and (max-width: 675px){
-    .edit-button{
+    .profile__edit-button{
         top: 162px;
     }
 }
 @media screen and (max-width: 425px){
-    .edit-button {
+    .profile__edit-button {
         right: -34px;
         top: 154px;
         background-size: 70%;
         background-repeat: no-repeat;
     }
 }
-.edit-button:hover{
-    background-image: url(../../images/EditButtonHover.svg);
+.profile__edit-button:hover{
+    opacity: 60%;
     cursor: pointer;
 }

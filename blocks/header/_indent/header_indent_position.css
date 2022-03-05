@@ -4,6 +4,6 @@
 }
 @media screen and (max-width: 425px){
     .header_indent_position{
-        margin: 28px 0px 41px 16px;
+        margin: 28px 0 41px;
     }
 }

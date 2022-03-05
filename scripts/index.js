@@ -1,13 +1,13 @@
 const popup=document.querySelector('.popup');
-const profileOpenButton=document.querySelector('.edit-button');
+const profileOpenButton=document.querySelector('.profile__edit-button');
 const profileCloseButton=popup.querySelector('.popup__close');
 
 let profileName=document.querySelector('.profile__name');
 let profileDescript=document.querySelector('.profile__description');
 
 
-let popupName=popup.querySelector('.popup__name');
-let popupDescript=popup.querySelector('.popup__description');
+let popupName=popup.querySelector('.popup__input_type_name');
+let popupDescript=popup.querySelector('.popup__input_type_description');
 
 
 function togglePopup(){
@@ -27,8 +27,8 @@ function saveProfile(evt){
     evt.preventDefault();
     profileName.textContent=popupName.value;
     profileDescript.textContent=popupDescript.value;
-    popup.classList.remove('popup_active');
+    togglePopup();
 }
 
-let popupSaveButton=popup.querySelector('.popup__profile');
+let popupSaveButton=popup.querySelector('.popup__inputs');
 popupSaveButton.addEventListener('submit',saveProfile);

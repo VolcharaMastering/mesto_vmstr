@@ -1,14 +1,12 @@
-.popup__profile{
+.popup__form{
     width: 430px;
-    height: 330px;
     background-color: white;
     color: #000;
     border-radius: 3%;
     position: relative;
 }
 @media screen and (max-width: 675px){
-    .popup__profile{
+    .popup__form{
         width: 282px;
-        height: 322px;
     }
 }

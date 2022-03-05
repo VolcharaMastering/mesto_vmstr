@@ -1,4 +1,12 @@
 .galary{
     width: 100%;
     margin: 0;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 675px){
+    .galary{
+        padding: 0 19px;
+    }
+    }
 }

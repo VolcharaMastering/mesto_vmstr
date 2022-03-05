@@ -2,10 +2,12 @@
     width: 22px;
     height: 19px;
     background-image: url(../../../images/like.svg);
+    background-color: transparent;
+    border: none;
     margin: 0;
 }
 .card__like:hover{
-    background-image: url(../../../images/likeHover.svg);
+    opacity: 50%;
     cursor: pointer;
 }
 .card__like:active{
