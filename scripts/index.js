@@ -22,9 +22,14 @@ function saveProfile(evt){
     evt.preventDefault();
     profileName.textContent=popupName.value;
     profileDescript.textContent=popupDescript.value;
-    togglePopup();
+    closePopup();
 }
 
 profileOpenButton.addEventListener('click',togglePopup);
 profileCloseButton.addEventListener('click',closePopup);
 popupSaveButton.addEventListener('submit',saveProfile);
+popup.addEventListener('click',function(event){
+    if (event.target === event.currentTarget){
+        closePopup();
+    }
+});

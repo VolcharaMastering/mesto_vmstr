@@ -1,4 +1,4 @@
-.popup__form{
+.popup__modal-container{
     width: 430px;
     background-color: white;
     color: #000;
@@ -6,7 +6,7 @@
     position: relative;
 }
 @media screen and (max-width: 675px){
-    .popup__form{
+    .popup__modal-container{
         width: 282px;
     }
 }
