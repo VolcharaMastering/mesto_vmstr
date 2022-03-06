@@ -7,10 +7,11 @@
     border-radius: 2%;
     background-color: transparent;
     background-repeat: no-repeat;
+    transition: opacity 0.5s linear;
 }
 @media screen and (max-width: 675px){
     .profile__add-button{
-        margin-top: 30px;
+        margin-top: 32px;
     }
 }
 @media screen and (max-width: 675px){

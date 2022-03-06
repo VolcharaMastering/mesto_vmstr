@@ -6,11 +6,12 @@
     background-size: contain;
     border: none;
     position: absolute;
+    transition: opacity 0.5s linear;
     top: -40px;
     right: -40px;
 }
 .popup__close:hover{
-    background-image: url(../../../images/CloseIconHover.png);
+    opacity: 60%;
     cursor: pointer;
 }
 @media screen and (max-width: 675px){

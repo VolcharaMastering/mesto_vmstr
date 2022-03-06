@@ -9,7 +9,12 @@
 }
 @media screen and (max-width: 870px){
     .profile__description{
-        max-width: 290px;
+        max-width: 296px;
+    }
+}
+@media screen and (max-width: 675px){
+    .profile__description{
+        max-width: 296px;
     }
 }
 @media screen and (max-width: 425px){

@@ -7,6 +7,12 @@
     background-image: url(../../images/logo.svg);
     margin: 0;
 }
+@media screen and (max-width: 900px) {
+    .logo{
+        margin-left: 27px;
+    }
+}
+
 @media screen and (max-width: 425px) {
     .logo{
         width: 103.74px;
