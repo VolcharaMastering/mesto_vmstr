@@ -5,6 +5,7 @@
     color: #000000;
     overflow: hidden;
     border-radius: 3%;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
