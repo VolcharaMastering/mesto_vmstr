@@ -17,7 +17,7 @@ const initialCards = [
     },
     {
       name: 'Крым',
-      link: 'ttps://images.unsplash.com/photo-1634033636079-3b05184ab227?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+      link: 'https://images.unsplash.com/photo-1634033636079-3b05184ab227?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
     },
     {
       name: 'Скалы Мохер',
@@ -26,6 +26,14 @@ const initialCards = [
 ]
 
 
+const card=document.querySelectorAll('.card');
+//let cardArray=Array.from(card);
+
+console.log(initialCards[0].link);
+for (let i=0; i<=initialCards.length;i++){
+    card[i].querySelector('.card__image').setAttribute('src',initialCards[i].link);
+    card[i].querySelector('.card__name').textContent=initialCards[i].name;
+};
 
 const popup=document.querySelector('.popup');
 const profileOpenButton=document.querySelector('.profile__edit-button');
