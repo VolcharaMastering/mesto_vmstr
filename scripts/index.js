@@ -12,8 +12,8 @@ const initialCards = [
       link: 'https://images.unsplash.com/photo-1591996686974-2e2f871e3c09?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
     },
     {
-      name: 'Фото из галереи',
-      link: 'https://images.unsplash.com/photo-1634033636079-3b05184ab227?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
+      name: 'Великий Новгород',
+      link: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/%D0%A1%D0%BE%D1%84%D0%B8%D0%B9%D1%81%D0%BA%D0%B0%D1%8F_%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F-%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%B8%D0%B9_%D0%9D%D0%BE%D0%B2%D0%B3%D0%BE%D1%80%D0%BE%D0%B4.jpg'
     },
     {
       name: 'Крым',
@@ -26,48 +26,53 @@ const initialCards = [
 ]
 
 
-const card=document.querySelectorAll('.card');
-//let cardArray=Array.from(card);
+const galary=document.querySelector('.photos');
 
-console.log(initialCards[0].link);
-for (let i=0; i<=initialCards.length;i++){
-    card[i].querySelector('.card__image').setAttribute('src',initialCards[i].link);
-    card[i].querySelector('.card__name').textContent=initialCards[i].name;
+let createCard=(cardName,imageLink)=>{
+  const card=document.querySelector('.template-card').content.cloneNode(true);
+  card.querySelector('.card__image').setAttribute('src',imageLink);
+  card.querySelector('.card__name').textContent=cardName;
+  galary.append(card);
 };
 
-const popup=document.querySelector('.popup');
+initialCards.forEach(item=>{
+  createCard(item.name,item.link);
+});
+
 const profileOpenButton=document.querySelector('.profile__edit-button');
 const profileAddButton=document.querySelector('.profile__add-button');
-const profileCloseButton=popup.querySelector('.popup__close');
+//createCard(newName,newLink);
+
+function openPopupEdit(){
+  const popupEdit=document.querySelector('.popup_editor').cloneNode(true);
+  console.log(popupEdit);
+  let userName=popupEdit.querySelector('.popup__input_type_name').textContent;
+  let userProfile=popupEdit.querySelector('.popup__input_type_description').textContent;
+  popupName.value=userName;
+  popupDescript.value=userProfile;
+  'body'.append(popupEdit);
+  return popupEdit;
+}
+
+const profileCloseButton=document.querySelector('.popup__close');
 
 let profileName=document.querySelector('.profile__name');
 let profileDescript=document.querySelector('.profile__description');
-const popupName=popup.querySelector('.popup__input_type_name');
-const popupDescript=popup.querySelector('.popup__input_type_description');
-const popupTitle=popup.querySelector('.popup__input_type_title');
-const popupLink=popup.querySelector('.popup__input_type_link');
-const popupSaveButton=popup.querySelector('.popup__inputs');
 
-function openPopupEdit(){
-    let userName=profileName.textContent;
-    let userProfile=profileDescript.textContent;
-    popupName.value=userName;
-    popupDescript.value=userProfile;
-    popupName.removeAttribute('hidden');
-    popupDescript.removeAttribute('hidden');
-    popup.classList.add('popup_active');
-}
+const popupName=document.querySelector('.popup__input_type_name');
+const popupDescript=document.querySelector('.popup__input_type_description');
+
+const popupTitle=document.querySelector('.popup__input_type_title');
+const popupLink=document.querySelector('.popup__input_type_link');
+
+const popupSaveButton=document.querySelector('.popup__inputs');
+
+
 function openPopupAdd(){
-    popupTitle.removeAttribute('hidden');
-    popupLink.removeAttribute('hidden');
-    popup.classList.add('popup_active');
+
 }
-function closePopup(){
-    popup.classList.remove('popup_active');
-    popupTitle.setAttribute('hidden','hidden');
-    popupLink.setAttribute('hidden','hidden');
-    popupName.setAttribute('hidden','hidden');
-    popupDescript.setAttribute('hidden','hidden');
+function closePopup(evt){
+  evt.target.closest('.popup').remove();
 }
 function saveProfile(evt){
     evt.preventDefault();

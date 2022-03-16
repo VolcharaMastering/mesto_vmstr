@@ -23,7 +23,7 @@
                 <button class="profile__add-button" type="button" aria-label="Добавить изображение в галерею"></button>
             </section>
             <section class="photos">
-                <article class="card">
+<!--                <article class="card">
                     <img class="card__image" src="" alt="Фото из галереи">
                     <button class="card__remove" type="submit" aria-label="Удалить"></button>
                     <div class="card__caption">
@@ -70,18 +70,28 @@
                         <h2 class="card__name"></h2>
                         <button class="card__like" type="button" aria-label="Нравится"></button>
                     </div>
-                </article>
+                </article>-->
             </section>
         </main>
         <footer class="footer">
             <p class="footer__label">© 2022 Mesto Russia</p>
         </footer>
+        <template class="template-card">
+            <article class="card">
+                <img class="card__image" src="" alt="Фото из галереи">
+                <button class="card__remove" type="submit" aria-label="Удалить"></button>
+                <div class="card__caption">
+                    <h2 class="card__name"></h2>
+                    <button class="card__like" type="button" aria-label="Нравится"></button>
+                </div>
+            </article>
+        </template>
         <template class="popup popup_editor">
             <div class="popup__modal-container">
                 <h2 class="popup__header">Редактировать профиль</h2>
                 <form class="popup__inputs" name="profile">
-                    <input type="text" hidden class="popup__input popup__input_type_name" name="name">
-                    <input type="text" hidden class="popup__input popup__input_type_description" name="description">
+                    <input type="text" class="popup__input popup__input_type_name" name="name">
+                    <input type="text" class="popup__input popup__input_type_description" name="description">
                     <button class="popup__save" type="submit" aria-label="Сохранить новые настройки профиля">Сохранить</button>
                 </form>
                 <button class="popup__close" type="button" aria-label="Закрыть окно профиля"></button>
@@ -91,8 +101,8 @@
             <div class="popup__modal-container">
                 <h2 class="popup__header">Новое место</h2>
                 <form class="popup__inputs" name="add-image">
-                    <input type="text" hidden class="popup__input popup__input_type_title" name="title">
-                    <input type="text" hidden class="popup__input popup__input_type_link" name="link">
+                    <input type="text" class="popup__input popup__input_type_title" name="title">
+                    <input type="text" class="popup__input popup__input_type_link" name="link">
                     <button class="popup__save" type="submit" aria-label="Добавить новое изображение в галерею">Создать</button>
                 </form>
                 <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
