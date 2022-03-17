@@ -1,11 +1,11 @@
-.galary{
+.gallery{
     width: 100%;
     margin: 0;
     box-sizing: border-box;
 }
 
 @media screen and (max-width: 900px){
-    .galary{
+    .gallery{
         padding: 0 19px;
     }
 }

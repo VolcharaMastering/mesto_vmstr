@@ -25,68 +25,113 @@ const initialCards = [
     }
 ]
 
+const main=document.querySelector('.gallery');
+const photos=document.querySelector('.photos');
 
-const galary=document.querySelector('.photos');
-
+//-----make cards-----
 let createCard=(cardName,imageLink)=>{
   const card=document.querySelector('.template-card').content.cloneNode(true);
   card.querySelector('.card__image').setAttribute('src',imageLink);
   card.querySelector('.card__name').textContent=cardName;
-  galary.append(card);
+  photos.prepend(card);
 };
 
 initialCards.forEach(item=>{
   createCard(item.name,item.link);
 });
+//----------
 
-const profileOpenButton=document.querySelector('.profile__edit-button');
-const profileAddButton=document.querySelector('.profile__add-button');
-//createCard(newName,newLink);
+//variables
+const popupEdit=document.querySelector('.popup-editor').content.firstElementChild.cloneNode(true);
+const popupAdd=document.querySelector('.popup-adder').content.firstElementChild.cloneNode(true);
+const popupImage=document.querySelector('.popup-image').content.firstElementChild.cloneNode(true);
 
-function openPopupEdit(){
-  const popupEdit=document.querySelector('.popup_editor').cloneNode(true);
-  console.log(popupEdit);
-  let userName=popupEdit.querySelector('.popup__input_type_name').textContent;
-  let userProfile=popupEdit.querySelector('.popup__input_type_description').textContent;
-  popupName.value=userName;
-  popupDescript.value=userProfile;
-  'body'.append(popupEdit);
-  return popupEdit;
-}
-
-const profileCloseButton=document.querySelector('.popup__close');
-
-let profileName=document.querySelector('.profile__name');
-let profileDescript=document.querySelector('.profile__description');
-
-const popupName=document.querySelector('.popup__input_type_name');
-const popupDescript=document.querySelector('.popup__input_type_description');
-
-const popupTitle=document.querySelector('.popup__input_type_title');
-const popupLink=document.querySelector('.popup__input_type_link');
-
-const popupSaveButton=document.querySelector('.popup__inputs');
+let profileName=main.querySelector('.profile__name');
+let profileDescript=main.querySelector('.profile__description');
+let returnName=popupEdit.querySelector('.popup__input_type_name');
+let returnDescript=popupEdit.querySelector('.popup__input_type_description');
 
 
-function openPopupAdd(){
+//-----buttons-------
+const profileOpenButton=main.querySelector('.profile__edit-button');
+const profileAddButton=main.querySelector('.profile__add-button');
+const popupSaveButton=popupEdit.querySelector('.popup__inputs');
+const popupAddButton=popupEdit.querySelector('.popup__inputs');
 
-}
-function closePopup(evt){
+//-----functions-----
+closePopup=(evt)=>{
   evt.target.closest('.popup').remove();
 }
+
+function openPopupEdit(){
+  returnName.value=profileName.textContent;
+  returnDescript.value=profileDescript.textContent;
+  main.append(popupEdit);
+  //const profileCloseButton=;
+  popupEdit.querySelector('.popup__close').addEventListener('click',closePopup);
+  popupEdit.addEventListener('click',function(evt){
+    if (evt.target === evt.currentTarget){
+        closePopup(evt);
+    }
+  });
+  return popupEdit;
+}
 function saveProfile(evt){
-    evt.preventDefault();
-    profileName.textContent=popupName.value;
-    profileDescript.textContent=popupDescript.value;
-    closePopup();
+  evt.preventDefault();
+  profileName.textContent=returnName.value;
+  profileDescript.textContent=returnDescript.value;
+  closePopup(evt);
+}
+let newTitle;
+let newLink;
+function openPopupAdd(){
+  main.append(popupAdd);
+  newTitle=document.querySelector('.popup__input_type_title').textContent;
+  newLink=document.querySelector('.popup__input_type_link').textContent;
+  popupAdd.querySelector('.popup__close').addEventListener('click',closePopup);
+  popupAdd.addEventListener('click',function(evt){
+    if (evt.target === evt.currentTarget){
+        closePopup(evt);
+    }
+  });
+  popupAddButton.addEventListener('click', () => {renderCard(evt);},false);
+  return popupAdd;
 }
 
+function renderCard(evt) {
+  evt.preventDefault();
+  const card=document.querySelector('.template-card').content.cloneNode(true);
+  card.querySelector('.card__image').setAttribute('src',newLink);
+  card.querySelector('.card__name').textContent=newTitle;
+  photos.prepend(card);
+  closePopup(evt);
+}
+
+
+
+
+
+//---Clicks------
+
+popupSaveButton.addEventListener('submit',saveProfile);
 profileOpenButton.addEventListener('click',openPopupEdit);
 profileAddButton.addEventListener('click',openPopupAdd);
-profileCloseButton.addEventListener('click',closePopup);
-popupSaveButton.addEventListener('submit',saveProfile);
-popup.addEventListener('click',function(event){
-    if (event.target === event.currentTarget){
-        closePopup();
-    }
-});
+
+
+
+
+
+
+
+//;
+
+
+
+
+
+
+
+
+
+
+
