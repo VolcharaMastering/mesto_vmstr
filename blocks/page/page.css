@@ -29,9 +29,30 @@
     opacity: 60%;
     cursor: pointer;
 }
-
+.popup__image-container{
+    position: relative;
+    margin: 0;
+}
 .popup__image{
     max-width: 75vw;
     max-height: 75vh;
-    position: relative;
+    margin: 0;
+}
+.popup__image-caption{
+    width: 75vw;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 10px 0 0;
+}
+
+@keyframes damping {
+    100%{
+        opacity: 100%;
+    }
+    0%{
+        opacity: 0%;
+    }
+}
+.close-modal{
+    animation: damping .5s ease-in;
 }

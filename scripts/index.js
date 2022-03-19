@@ -32,7 +32,11 @@ const photos=document.querySelector('.photos');
 let createCard=(cardName,imageLink)=>{
   const card=document.querySelector('.template-card').content.cloneNode(true);
   card.querySelector('.card__image').setAttribute('src',imageLink);
+  card.querySelector('.card__image').setAttribute('alt',cardName);
   card.querySelector('.card__name').textContent=cardName;
+  card.querySelector('.card__remove').addEventListener('click',imageToTrash);
+  card.querySelector('.card__like').addEventListener('click',likeDislike);
+  card.querySelector('.card__image').addEventListener('click',openImage);
   return card;
 };
 
@@ -58,11 +62,15 @@ const profileOpenButton=main.querySelector('.profile__edit-button');
 const profileAddButton=main.querySelector('.profile__add-button');
 const popupSaveButton=popupEdit.querySelector('.popup__inputs');
 const popupAddButton=popupAdd.querySelector('.popup__inputs');
-const openImageButton=main.querySelector('.card__image');
-console.log(openImageButton);
+
+
 //-----functions-----
 closePopup=(evt)=>{
-  evt.target.closest('.popup').remove();
+  evt.target.closest('.popup').style.animation='damping .5s ease-in';
+  setTimeout(function(){
+    evt.target.closest('.popup').style.animation='';
+    evt.target.closest('.popup').remove();
+  },450);
 }
 
 function openPopupEdit(){
@@ -94,6 +102,8 @@ function renderCard(evt) {
 }
 
 function openPopupAdd(){
+  popupAdd.querySelector('.popup__input_type_title').value=null;
+  popupAdd.querySelector('.popup__input_type_link').value=null;
   main.append(popupAdd);
   popupAdd.querySelector('.popup__close').addEventListener('click',closePopup);
   popupAdd.addEventListener('click',function(evt){
@@ -104,12 +114,12 @@ function openPopupAdd(){
   return popupAdd;
 }
 function openImage(evt){
-  const section=popupImage.querySelector('.popup');
-  console.log(popupImage);
-  popupImage.style.backgroundColor = `rgba(0, 0, 0, .9)`
+  popupImage.style.backgroundColor = `rgba(0, 0, 0, .9)`;
   const imageLink=evt.currentTarget.getAttribute('src');
+  const imageCaption=evt.currentTarget.getAttribute('alt');
+  console.log(imageCaption);
   popupImage.querySelector('.popup__image').setAttribute('src',imageLink);
-  console.log(imageLink);
+  popupImage.querySelector('.popup__image-caption').textContent=imageCaption;
   main.append(popupImage);
   popupImage.querySelector('.popup__close').addEventListener('click',closePopup);
   popupImage.addEventListener('click',function(evt){
@@ -118,19 +128,25 @@ function openImage(evt){
     }
   });
 }
-
-
-
-
+function imageToTrash(evt){
+  console.log("deleting");
+  evt.target.closest('.card').remove();
+}
+function likeDislike(evt){
+  console.log(evt.target.style.backgroundImage);
+  if (evt.target.style.backgroundImage==='url("./images/like.svg")' || evt.target.style.backgroundImage===''){
+    evt.target.style.backgroundImage='url("./images/likeSelected.svg")';
+  }
+  else{
+    evt.target.style.backgroundImage='url("./images/like.svg")';
+  }
+}
 
 //---Clicks------
-
 popupSaveButton.addEventListener('submit',saveProfile);
 popupAddButton.addEventListener('submit',renderCard);
 profileOpenButton.addEventListener('click',openPopupEdit);
 profileAddButton.addEventListener('click',openPopupAdd);
-openImageButton.addEventListener('click',openImage);
-
 
 
 
