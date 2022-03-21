@@ -28,9 +28,9 @@ const initialCards = [
 const main=document.querySelector('.gallery');
 const photos=main.querySelector('.photos');
 
-const popupProfile=document.querySelector('.popup__editor');
-const popupNewImage=document.querySelector('.popup__adder');
-const popupBigImage=document.querySelector('.popup__image');
+const popupProfile=document.querySelector('.popup_editor');
+const popupNewImage=document.querySelector('.popup_adder');
+const popupBigImage=document.querySelector('.popup_big-image');
 const closePopupButtons=document.querySelectorAll('.popup__close');
 const profileName=main.querySelector('.profile__name');
 const profileDescript=main.querySelector('.profile__description');
