@@ -27,21 +27,19 @@ const initialCards = [
 
 const main=document.querySelector('.gallery');
 const photos=main.querySelector('.photos');
-const popup=document.querySelector('.popup');
 
 const popupProfile=document.querySelector('.popup__editor');
 const popupNewImage=document.querySelector('.popup__adder');
 const popupBigImage=document.querySelector('.popup__image');
 const closePopupButtons=document.querySelectorAll('.popup__close');
-
-let profileName=main.querySelector('.profile__name');
-let profileDescript=main.querySelector('.profile__description');
-
-let returnName=popupProfile.querySelector('.popup__input_type_name');
-let returnDescript=popupProfile.querySelector('.popup__input_type_description');
-
-let newTitle=popupNewImage.querySelector('.popup__input_type_title');
-let newLink=popupNewImage.querySelector('.popup__input_type_link');
+const profileName=main.querySelector('.profile__name');
+const profileDescript=main.querySelector('.profile__description');
+const returnName=popupProfile.querySelector('.popup__input_type_name');
+const returnDescript=popupProfile.querySelector('.popup__input_type_description');
+const newTitle=popupNewImage.querySelector('.popup__input_type_title');
+const newLink=popupNewImage.querySelector('.popup__input_type_link');
+const bigImage=popupBigImage.querySelector('.popup__image');
+const bigImageCaption=popupBigImage.querySelector('.popup__image-caption');
 
 //-----buttons-------
 const profileOpenButton=main.querySelector('.profile__edit-button');
@@ -57,9 +55,6 @@ closePopup=(evt)=>{
     evt.target.closest('.popup').classList.remove('popup_active');
   },450);
 }
-
-
-
 
 function openPopupProfile(){
   popupProfile.classList.add('popup_active');
@@ -91,10 +86,10 @@ function openImage(evt){
   popupBigImage.style.backgroundColor = `rgba(0, 0, 0, .9)`;
   const imageLink=evt.currentTarget.getAttribute('src');
   const imageCaption=evt.currentTarget.getAttribute('alt');
-  popupBigImage.querySelector('.popup__image').setAttribute('src',imageLink);
-  popupBigImage.querySelector('.popup__image-caption').textContent=imageCaption;
+  bigImage.setAttribute('src',imageLink);
+  bigImageCaption.textContent=imageCaption;
 }
-function imageToTrash(evt){
+function deleteImage(evt){
   evt.target.closest('.card').remove();
 }
 function likeDislike(evt){
@@ -105,21 +100,32 @@ function likeDislike(evt){
     evt.target.style.backgroundImage='url("./images/like.svg")';
   }
 }
-let createCard=(cardName,imageLink)=>{
+
+createCard=(newCardName,imageLink)=>{
   const card=document.querySelector('.template-card').content.cloneNode(true);
-  card.querySelector('.card__image').setAttribute('src',imageLink);
-  card.querySelector('.card__image').setAttribute('alt',cardName);
-  card.querySelector('.card__name').textContent=cardName;
-  card.querySelector('.card__remove').addEventListener('click',imageToTrash);
-  card.querySelector('.card__like').addEventListener('click',likeDislike);
-  card.querySelector('.card__image').addEventListener('click',openImage);
+  const cardImage=card.querySelector('.card__image');
+  const cardName=card.querySelector('.card__name');
+  const cardRemove=card.querySelector('.card__remove');
+  const cardLike=card.querySelector('.card__like');
+  cardImage.setAttribute('src',imageLink);
+  cardImage.setAttribute('alt',newCardName);
+  cardName.textContent=newCardName;
+  cardRemove.addEventListener('click',deleteImage);
+  cardLike.addEventListener('click',likeDislike);
+  cardImage.addEventListener('click',openImage);
   return card;
 };
+
 initialCards.forEach(item=>{
   const returnCard=createCard(item.name,item.link);
   photos.append(returnCard);
 });
 
+closePopupByBackground=(evt) =>{
+  if (evt.target === evt.currentTarget){
+      closePopup(evt);
+  }
+}
 
 //---Clicks------
 popupSaveButton.addEventListener('submit',saveProfile);
@@ -129,10 +135,6 @@ profileAddButton.addEventListener('click',openPopupNewImage);
 closePopupButtons.forEach(function (item){
   item.addEventListener('click',closePopup);
 });
-
-/*const popupActive=document.querySelector('.popup_active')
-popupActive.addEventListener('click',function(evt){
-  if (evt.target === evt.currentTarget){
-      closePopup(evt);
-  }
-});*/
+popupProfile.addEventListener('click',closePopupByBackground);
+popupBigImage.addEventListener('click',closePopupByBackground);
+popupNewImage.addEventListener('click',closePopupByBackground);
