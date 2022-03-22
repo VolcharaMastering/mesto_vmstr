@@ -1,22 +1,7 @@
-@keyframes rise {
-    0%{
-        opacity: 0%;
-    }
-    100%{
-        opacity: 100%;
-    }
-}
-@keyframes damping {
-    0%{
-        opacity: 100%;
-    }
-    100%{
-        opacity: 0%;
-    }
-}
+
 .popup{
     position: fixed;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     top: 0;
@@ -25,5 +10,7 @@
     right: 0;
     background-color: rgba(0, 0, 0, .5);
     margin: 0;
-    animation: rise .5s ease-in;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s,visibility 1s;
 }
