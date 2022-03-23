@@ -54,6 +54,9 @@ const openPopup=(popup)=>{
 }
 const closePopup=(popup)=>{
     popup.classList.remove('popup_active');
+    if (popup.classList.contains('popup_dark-shadow')){
+      popup.classList.remove('popup_dark-shadow');
+    }
 }
 
 function openPopupProfile(){
@@ -77,24 +80,17 @@ function renderCard(evt) {
   newLink.value=null;
 }
 
-function openImage(evt){
-  popupBigImage.classList.add('popup_active');
-  popupBigImage.style.backgroundColor = `rgba(0, 0, 0, .9)`;
-  const imageLink=evt.currentTarget.getAttribute('src');
-  const imageCaption=evt.currentTarget.getAttribute('alt');
+function openImage(newCardName,imageLink){
+  openPopup(popupBigImage);
+  popupBigImage.classList.add('popup_dark-shadow');
   bigImage.setAttribute('src',imageLink);
-  bigImageCaption.textContent=imageCaption;
+  bigImageCaption.textContent=newCardName;
 }
 function deleteImage(evt){
   evt.target.closest('.card').remove();
 }
-function likeDislike(evt){
-  if (evt.target.style.backgroundImage==='url("./images/like.svg")' || evt.target.style.backgroundImage===''){
-    evt.target.style.backgroundImage='url("./images/likeSelected.svg")';
-  }
-  else{
-    evt.target.style.backgroundImage='url("./images/like.svg")';
-  }
+function toggleLike(cardLike){
+  cardLike.classList.toggle('card__like_active');
 }
 
 const createCard=(newCardName,imageLink)=>{
@@ -104,27 +100,28 @@ const createCard=(newCardName,imageLink)=>{
   const cardRemove=card.querySelector('.card__remove');
   const cardLike=card.querySelector('.card__like');
   cardImage.setAttribute('src',imageLink);
-  cardImage.setAttribute('alt',newCardName);
+  cardImage.setAttribute('alt','Фото из галереи: ' + newCardName);
   cardName.textContent=newCardName;
   cardRemove.addEventListener('click',deleteImage);
-  cardLike.addEventListener('click',likeDislike);
-  cardImage.addEventListener('click',openImage);
+  cardLike.addEventListener('click',()=>{
+    toggleLike(cardLike);
+  });
+  cardImage.addEventListener('click',() =>{
+    openImage(newCardName,imageLink);
+  });
   return card;
 };
 
-/*const closePopupByBackground=(evt,poup) =>{
-  console.log(popup);
+const closePopupByBackground=(evt) =>{
   if (evt.target === evt.currentTarget){
-      closePopup(popup);
+      closePopup(evt.target);
   }
-}*/
+}
 
 initialCards.forEach(item=>{
   const returnCard=createCard(item.name,item.link);
   photos.append(returnCard);
 });
-
-
 
 //---Clicks------
 popupProfileSubmit.addEventListener('submit',saveProfile);
@@ -138,10 +135,5 @@ popups.forEach(function (item,id){
   closePopupButtons[id].addEventListener('click',function(){
     closePopup(item);
   });
-/*  item.addEventListener('click',function() {
-    closePopupByBackground(item);
-  });*/
+  item.addEventListener('click',closePopupByBackground);
 });
-//popupProfile.addEventListener('click',closePopupByBackground);
-//popupBigImage.addEventListener('click',closePopupByBackground);
-//popupNewImage.addEventListener('click',closePopupByBackground);
