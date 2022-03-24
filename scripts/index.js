@@ -45,8 +45,10 @@ const bigImageCaption = popupBigImage.querySelector('.popup__image-caption');
 //-----buttons-------
 const profileOpenButton = main.querySelector('.profile__edit-button');
 const profileAddButton = main.querySelector('.profile__add-button');
-const popupProfileSubmit = popupProfile.querySelector('.popup__inputs[name="profile"]');
-const popupNewImageSubmit = popupNewImage.querySelector('.popup__inputs[name="add-image"]');
+
+//----inputs from form by submit-----
+const profileForm = popupProfile.querySelector('.popup__inputs[name="profile"]');
+const cardForm = popupNewImage.querySelector('.popup__inputs[name="add-image"]');
 
 //-----functions-----
 const openPopup = (popup) => {
@@ -54,9 +56,6 @@ const openPopup = (popup) => {
 }
 const closePopup = (popup) => {
   popup.classList.remove('popup_active');
-  if (popup.classList.contains('popup_dark-shadow')) {
-    popup.classList.remove('popup_dark-shadow');
-  }
 }
 
 function openPopupProfile() {
@@ -82,8 +81,8 @@ function renderCard(evt) {
 
 function openImage(newCardName, imageLink) {
   openPopup(popupBigImage);
-  popupBigImage.classList.add('popup_dark-shadow');
   bigImage.setAttribute('src', imageLink);
+  bigImage.setAttribute('alt', 'Увеличенное фото из галереи: ' + newCardName);
   bigImageCaption.textContent = newCardName;
 }
 function deleteImage(evt) {
@@ -124,8 +123,8 @@ initialCards.forEach(item => {
 });
 
 //---Clicks------
-popupProfileSubmit.addEventListener('submit', saveProfile);
-popupNewImageSubmit.addEventListener('submit', renderCard);
+profileForm.addEventListener('submit', saveProfile);
+cardForm.addEventListener('submit', renderCard);
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
   openPopup(popupNewImage);
