@@ -31,6 +31,7 @@ const photos = main.querySelector('.photos');
 const popupProfile = document.querySelector('.popup_editor');
 const popupNewImage = document.querySelector('.popup_adder');
 const popupBigImage = document.querySelector('.popup_big-image');
+
 const popups = document.querySelectorAll('.popup');
 const closePopupButtons = document.querySelectorAll('.popup__close');
 const profileName = main.querySelector('.profile__name');
@@ -53,9 +54,11 @@ const cardForm = popupNewImage.querySelector('.popup__inputs[name="add-image"]')
 //-----functions-----
 const openPopup = (popup) => {
   popup.classList.add('popup_active');
+  popup.addEventListener('keydown', listenKeydown);
 }
 const closePopup = (popup) => {
   popup.classList.remove('popup_active');
+  popup.removeEventListener('keydown', listenKeydown);
 }
 
 function openPopupProfile() {
@@ -108,8 +111,11 @@ const createCard = (newCardName, imageLink) => {
   cardImage.addEventListener('click', () => {
     openImage(newCardName, imageLink);
   });
+
   return card;
 };
+
+
 
 const closePopupByBackground = (evt) => {
   if (evt.target === evt.currentTarget) {
@@ -121,6 +127,13 @@ initialCards.forEach(item => {
   const returnCard = createCard(item.name, item.link);
   photos.append(returnCard);
 });
+const listenKeydown=(evt)=>{
+//  if (evt.key==='Escape'){
+      console.log(evt.target.key);
+      alert(evt.currentTarget.code);
+  //    closePopup(evt.target);
+  //}
+}
 
 //---Clicks------
 profileForm.addEventListener('submit', saveProfile);
@@ -135,4 +148,6 @@ popups.forEach(function (item, id) {
     closePopup(item);
   });
   item.addEventListener('click', closePopupByBackground);
+  //item.addEventListener('keydown', listenKeydown);
+  
 });

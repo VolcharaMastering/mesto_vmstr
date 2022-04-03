@@ -41,8 +41,8 @@
             <div class="popup__modal-container">
                 <h2 class="popup__header">Редактировать профиль</h2>
                 <form class="popup__inputs" name="profile">
-                    <input type="text" class="popup__input popup__input_type_name" name="name">
-                    <input type="text" class="popup__input popup__input_type_description" name="description">
+                    <input type="text" class="popup__input popup__input_type_name" name="name" required minlength="2" maxlength="40">
+                    <input type="text" class="popup__input popup__input_type_description" name="description" required minlength="2" maxlength="200">
                     <button class="popup__save" type="submit" aria-label="Сохранить новые настройки профиля">Сохранить</button>
                 </form>
                 <button class="popup__close" type="button" aria-label="Закрыть окно профиля"></button>
@@ -52,8 +52,8 @@
             <div class="popup__modal-container">
                 <h2 class="popup__header">Новое место</h2>
                 <form class="popup__inputs" name="add-image">
-                    <input type="text" class="popup__input popup__input_type_title" placeholder="Название" name="title">
-                    <input type="text" class="popup__input popup__input_type_link" placeholder="Ссылка на картинку" name="link">
+                    <input type="text" class="popup__input popup__input_type_title" placeholder="Название" name="title" required minlength="2" maxlength="30">
+                    <input type="url" class="popup__input popup__input_type_link" placeholder="Ссылка на картинку" name="link" required>
                     <button class="popup__save" type="submit" aria-label="Добавить новое изображение в галерею">Создать</button>
                 </form>
                 <button class="popup__close" type="button" aria-label="Закрыть окно"></button>
