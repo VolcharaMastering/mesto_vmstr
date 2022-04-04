@@ -54,7 +54,7 @@ const newLink = cardForm.elements.link;
 //-----functions-----
 const openPopup = (popup) => {
   popup.classList.add('popup_active');
-  popup.addEventListener('keydown', listenKeydown);
+  activateListenKeydown();
 }
 
 const closePopup = (popup) => {
@@ -65,28 +65,30 @@ const closePopup = (popup) => {
   else if (popup === popupNewImage) {
     callHideError(cardForm);
   }
-  popup.removeEventListener('keydown', listenKeydown);
+  removeListenKeydown();
 }
 
 const listenKeydown = (evt) => {
   if (evt.key === 'Escape') {
-    closePopup(evt.target);
+    const popupActive = document.querySelector('.popup_active');
+    closePopup(popupActive);
   }
 }
 
-const callHideError = (hideForm) => {
-  const inputArray = Array.from(hideForm.querySelectorAll('.popup__input'));
-  inputArray.forEach((inputs) => {
-    hideError(hideForm, inputs);
-  });
-  hideForm.reset();
-}
+function activateListenKeydown() {
+  document.addEventListener('keydown', listenKeydown);
+};
+
+function removeListenKeydown() {
+  document.removeEventListener('keydown', listenKeydown);
+};
+
 
 function openPopupProfile() {
   openPopup(popupProfile);
   returnName.value = profileName.textContent;
   returnDescript.value = profileDescript.textContent;
-  setInputListeners(profileForm);
+  enableValidation(profileForm);
 }
 
 function saveProfile(evt) {
@@ -148,22 +150,13 @@ initialCards.forEach(item => {
   photos.append(returnCard);
 });
 
-const toggleButton = (inputs, button) => {
-  if (formValidationCheck(inputs)) {
-    button.classList.add('popup__save_disable');
-  }
-  else {
-    button.classList.remove('popup__save_disable');
-  }
-}
-
 //---Clicks------
 profileForm.addEventListener('submit', saveProfile);
 cardForm.addEventListener('submit', renderCard);
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
   openPopup(popupNewImage);
-  setInputListeners(cardForm);
+  enableValidation(cardForm);
 });
 popups.forEach(function (item, id) {
   closePopupButtons[id].addEventListener('click', function () {
