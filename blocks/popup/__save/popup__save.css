@@ -8,7 +8,7 @@
     color: #FFFFFF;
     border: none;
     transition: opacity 0.5s linear;
-    margin: 23px 36px 36px 36px;
+    margin: 49px 36px 36px 36px;
 }
 @media screen and (max-width: 675px){
     .popup__save{
