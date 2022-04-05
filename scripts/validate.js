@@ -1,4 +1,4 @@
-validationList = {
+const validationList = {
     activeForm: '.popup__inputs',
     formInput: '.popup__input',
     popupSaveButton: '.popup__save',
@@ -6,57 +6,68 @@ validationList = {
     activeError: 'popup__input_error_active'
 };
 
-const enableValidation = (activeForm) => {
+const setEventListeners = (activeForm, validationList) => {
     const inputArray = Array.from(activeForm.querySelectorAll(validationList.formInput));
     const saveButton = activeForm.querySelector(validationList.popupSaveButton);
-    toggleButton(inputArray, saveButton);
+    toggleButtonState(inputArray, saveButton);
     inputArray.forEach((inputs) => {
         inputs.addEventListener('input', () => {
-            validateInput(activeForm, inputs);
-            toggleButton(inputArray, saveButton);
+            checkInputValidity(activeForm, inputs, validationList);
+            toggleButtonState(inputArray, saveButton);
         });
     });
 }
-
-const showError = (validForm, validElement, errorMessage) => {
+const enableValidation = (validationList) => {
+    const formList = Array.from(document.querySelectorAll(validationList.activeForm));
+    formList.forEach((formElement) => {
+        setEventListeners(formElement, validationList);
+    });
+};
+const showInputError = (validForm, validElement, errorMessage, validationList) => {
     const errorInElement = validForm.querySelector(`.${validElement.id}-error`);
     validElement.classList.add(validationList.inputError);
     errorInElement.classList.add(validationList.activeError);
     errorInElement.textContent = errorMessage;
 }
 
-const hideError = (validForm, validElement) => {
+const hideInputError = (validForm, validElement, validationList) => {
     const errorInElement = validForm.querySelector(`.${validElement.id}-error`);
     validElement.classList.remove(validationList.inputError);
     errorInElement.classList.remove(validationList.activeError);
     errorInElement.textContent = '';
 }
 
-const validateInput = (validForm, validElement) => {
+const checkInputValidity = (validForm, validElement, validationList) => {
     if (!validElement.validity.valid) {
-        showError(validForm, validElement, validElement.validationMessage);
+        showInputError(validForm, validElement, validElement.validationMessage, validationList);
     }
-    else hideError(validForm, validElement);
+    else hideInputError(validForm, validElement, validationList);
 }
 
-const formValidationCheck = (inputs) => {
+const hasInvalidInput = (inputs) => {
     return inputs.some((inputElement) => {
         return !inputElement.validity.valid;
     });
 }
 
-const toggleButton = (inputs, button) => {
-    if (formValidationCheck(inputs)) {
+const toggleButtonState = (inputs, button) => {
+    if (hasInvalidInput(inputs)) {
         button.classList.add('popup__save_disable');
+        button.setAttribute('disabled', 'disabled');
     }
     else {
         button.classList.remove('popup__save_disable');
+        button.removeAttribute('disabled');
     }
 }
 
-const callHideError = (hideForm) => {
-    const inputArray = Array.from(hideForm.querySelectorAll(validationList.formInput));
+enableValidation(validationList);
+
+const hideValidation = (formToHide, validationList) => {
+    const inputArray = Array.from(formToHide.querySelectorAll(validationList.formInput));
+    const saveButton = formToHide.querySelector(validationList.popupSaveButton);
+    toggleButtonState(inputArray, saveButton);
     inputArray.forEach((input) => {
-        hideError(hideForm, input);
+        hideInputError(formToHide, input, validationList);
     });
 }

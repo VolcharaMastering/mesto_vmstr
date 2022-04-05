@@ -59,12 +59,6 @@ const openPopup = (popup) => {
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_active');
-  if (popup === popupProfile) {
-    callHideError(profileForm);
-  }
-  else if (popup === popupNewImage) {
-    callHideError(cardForm);
-  }
   removeListenKeydown();
 }
 
@@ -88,7 +82,7 @@ function openPopupProfile() {
   openPopup(popupProfile);
   returnName.value = profileName.textContent;
   returnDescript.value = profileDescript.textContent;
-  enableValidation(profileForm);
+  hideValidation(profileForm, validationList);
 }
 
 function saveProfile(evt) {
@@ -103,6 +97,8 @@ function renderCard(evt) {
   const returnCard = createCard(newTitle.value, newLink.value);
   photos.prepend(returnCard);
   closePopup(popupNewImage);
+  newTitle.value = '';
+  newLink.value = '';
 }
 
 function openImage(newCardName, imageLink) {
@@ -156,7 +152,8 @@ cardForm.addEventListener('submit', renderCard);
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
   openPopup(popupNewImage);
-  enableValidation(cardForm);
+
+  hideValidation(cardForm, validationList);
 });
 popups.forEach(function (item, id) {
   closePopupButtons[id].addEventListener('click', function () {
