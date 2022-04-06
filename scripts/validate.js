@@ -2,6 +2,7 @@ const validationList = {
     activeForm: '.popup__inputs',
     formInput: '.popup__input',
     popupSaveButton: '.popup__save',
+    popupDisableButton: 'popup__save_disable',
     inputError: 'popup__input_type_error',
     activeError: 'popup__input_error_active'
 };
@@ -9,11 +10,11 @@ const validationList = {
 const setEventListeners = (activeForm, validationList) => {
     const inputArray = Array.from(activeForm.querySelectorAll(validationList.formInput));
     const saveButton = activeForm.querySelector(validationList.popupSaveButton);
-    toggleButtonState(inputArray, saveButton);
+    toggleButtonState(inputArray, saveButton, validationList);
     inputArray.forEach((inputs) => {
         inputs.addEventListener('input', () => {
             checkInputValidity(activeForm, inputs, validationList);
-            toggleButtonState(inputArray, saveButton);
+            toggleButtonState(inputArray, saveButton, validationList);
         });
     });
 }
@@ -50,23 +51,23 @@ const hasInvalidInput = (inputs) => {
     });
 }
 
-const toggleButtonState = (inputs, button) => {
+const toggleButtonState = (inputs, button, validationList) => {
     if (hasInvalidInput(inputs)) {
-        button.classList.add('popup__save_disable');
+        button.classList.add(validationList.popupDisableButton);
         button.setAttribute('disabled', 'disabled');
     }
     else {
-        button.classList.remove('popup__save_disable');
+        button.classList.remove(validationList.popupDisableButton);
         button.removeAttribute('disabled');
     }
 }
 
 enableValidation(validationList);
 
-const hideValidation = (formToHide, validationList) => {
+const resetValidation = (formToHide, validationList) => {
     const inputArray = Array.from(formToHide.querySelectorAll(validationList.formInput));
     const saveButton = formToHide.querySelector(validationList.popupSaveButton);
-    toggleButtonState(inputArray, saveButton);
+    toggleButtonState(inputArray, saveButton, validationList);
     inputArray.forEach((input) => {
         hideInputError(formToHide, input, validationList);
     });

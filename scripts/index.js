@@ -54,27 +54,27 @@ const newLink = cardForm.elements.link;
 //-----functions-----
 const openPopup = (popup) => {
   popup.classList.add('popup_active');
-  activateListenKeydown();
+  activateHandleEscapeKey();
 }
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_active');
-  removeListenKeydown();
+  removeHandleEscapeKey();
 }
 
-const listenKeydown = (evt) => {
+const handleEscapeKey = (evt) => {
   if (evt.key === 'Escape') {
     const popupActive = document.querySelector('.popup_active');
     closePopup(popupActive);
   }
 }
 
-function activateListenKeydown() {
-  document.addEventListener('keydown', listenKeydown);
+function activateHandleEscapeKey() {
+  document.addEventListener('keydown', handleEscapeKey);
 };
 
-function removeListenKeydown() {
-  document.removeEventListener('keydown', listenKeydown);
+function removeHandleEscapeKey() {
+  document.removeEventListener('keydown', handleEscapeKey);
 };
 
 
@@ -82,7 +82,7 @@ function openPopupProfile() {
   openPopup(popupProfile);
   returnName.value = profileName.textContent;
   returnDescript.value = profileDescript.textContent;
-  hideValidation(profileForm, validationList);
+  resetValidation(profileForm, validationList);
 }
 
 function saveProfile(evt) {
@@ -97,8 +97,7 @@ function renderCard(evt) {
   const returnCard = createCard(newTitle.value, newLink.value);
   photos.prepend(returnCard);
   closePopup(popupNewImage);
-  newTitle.value = '';
-  newLink.value = '';
+  cardForm.reset();
 }
 
 function openImage(newCardName, imageLink) {
@@ -151,9 +150,9 @@ profileForm.addEventListener('submit', saveProfile);
 cardForm.addEventListener('submit', renderCard);
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
+  cardForm.reset();
   openPopup(popupNewImage);
-
-  hideValidation(cardForm, validationList);
+  resetValidation(cardForm, validationList);
 });
 popups.forEach(function (item, id) {
   closePopupButtons[id].addEventListener('click', function () {
