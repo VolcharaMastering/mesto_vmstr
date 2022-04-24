@@ -82,16 +82,17 @@ function openImage(newCardName, imageLink) {
   bigImageCaption.textContent = newCardName;
 }
 
-function deleteImage(evt) {
+/* function deleteImage(evt) {
   evt.target.closest('.card').remove();
-}
-
-function toggleLike(cardLike) {
+} */
+import { Card } from "./Card.js";
+export const cardTemplate = document.querySelector('.template-card').content.cloneNode(true);
+/* function toggleLike(cardLike) {
   cardLike.classList.toggle('card__like_active');
-}
+} */
 
-const createCard = (newCardName, imageLink) => {
-  const card = document.querySelector('.template-card').content.cloneNode(true);
+/* const createCard = (newCardName, imageLink) => {
+  export const card = document.querySelector('.template-card').content.cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const cardName = card.querySelector('.card__name');
   const cardRemove = card.querySelector('.card__remove');
@@ -107,8 +108,7 @@ const createCard = (newCardName, imageLink) => {
     openImage(newCardName, imageLink);
   });
   return card;
-};
-
+}; */
 const closePopupByBackground = (evt) => {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
@@ -116,7 +116,8 @@ const closePopupByBackground = (evt) => {
 }
 
 initialCards.forEach(item => {
-  const returnCard = createCard(item.name, item.link);
+  const card = new Card(item.name, item.link);
+  const returnCard = card.render();
   photos.append(returnCard);
 });
 
