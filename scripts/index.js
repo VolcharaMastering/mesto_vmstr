@@ -1,4 +1,4 @@
-import {initialCards} from "./variables.js";
+import { initialCards } from "./variables.js";
 
 const main = document.querySelector('.gallery');
 const photos = main.querySelector('.photos');
@@ -67,7 +67,7 @@ function saveProfile(evt) {
   closePopup(popupProfile);
 }
 
-function renderCard(evt) {
+export function renderCard(evt) {
   evt.preventDefault();
   const returnCard = createCard(newTitle.value, newLink.value);
   photos.prepend(returnCard);
@@ -75,40 +75,15 @@ function renderCard(evt) {
   cardForm.reset();
 }
 
-function openImage(newCardName, imageLink) {
+/* function openImage(newCardName, imageLink) {
   openPopup(popupBigImage);
   bigImage.setAttribute('src', imageLink);
   bigImage.setAttribute('alt', 'Увеличенное фото из галереи: ' + newCardName);
   bigImageCaption.textContent = newCardName;
-}
-
-/* function deleteImage(evt) {
-  evt.target.closest('.card').remove();
 } */
+
 import { Card } from "./Card.js";
-export const cardTemplate = document.querySelector('.template-card').content.cloneNode(true);
-/* function toggleLike(cardLike) {
-  cardLike.classList.toggle('card__like_active');
-} */
 
-/* const createCard = (newCardName, imageLink) => {
-  export const card = document.querySelector('.template-card').content.cloneNode(true);
-  const cardImage = card.querySelector('.card__image');
-  const cardName = card.querySelector('.card__name');
-  const cardRemove = card.querySelector('.card__remove');
-  const cardLike = card.querySelector('.card__like');
-  cardImage.setAttribute('src', imageLink);
-  cardImage.setAttribute('alt', 'Фото из галереи: ' + newCardName);
-  cardName.textContent = newCardName;
-  cardRemove.addEventListener('click', deleteImage);
-  cardLike.addEventListener('click', () => {
-    toggleLike(cardLike);
-  });
-  cardImage.addEventListener('click', () => {
-    openImage(newCardName, imageLink);
-  });
-  return card;
-}; */
 const closePopupByBackground = (evt) => {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
@@ -117,7 +92,7 @@ const closePopupByBackground = (evt) => {
 
 initialCards.forEach(item => {
   const card = new Card(item.name, item.link);
-  const returnCard = card.render();
+  const returnCard = card.makeCard();
   photos.append(returnCard);
 });
 
