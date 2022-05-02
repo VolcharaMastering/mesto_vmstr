@@ -1,4 +1,6 @@
-import { renderCard } from "./index.js";
+//import { renderCard } from "./index.js";
+import { openImage } from "./utils.js";
+
 export class Card {
     constructor(newCardName, imageLink) {
         this._newCardName = newCardName;
@@ -12,27 +14,23 @@ export class Card {
             .cloneNode(true);
         return cardTemplate;
     }
+
     _toggleLike = () => {
         this._cardLike.classList.toggle('card__like_active');
     }
+
     _deleteImage = (evt) => {
         evt.target.closest('.card').remove();
     }
+
     _addEvents = () => {
         this._cardRemove.addEventListener('click', this._deleteImage);
         this._cardLike.addEventListener('click', () => {
             this._toggleLike(this._cardLike);
         });
         this._cardImage.addEventListener('click', () => {
-            this._openImage();
+            openImage(this._newCardName, this._imageLink);
         });
-    }
-
-    _openImage() {
-        openPopup(popupBigImage);
-        bigImage.setAttribute('src', this._imageLink);
-        bigImage.setAttribute('alt', 'Увеличенное фото из галереи: ' + this._newCardName);
-        bigImageCaption.textContent = this._newCardName;
     }
 
     makeCard() {
@@ -47,6 +45,5 @@ export class Card {
         this._cardName.textContent = this._newCardName;
         this._addEvents();
         return this._cardTemplate;
-
     }
 }
