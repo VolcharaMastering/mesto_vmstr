@@ -1,7 +1,7 @@
 import { initialCards, photos, main, popupProfile, popupNewImage, popups, closePopupButtons, profileForm, cardForm, validationList } from "./variables.js";
+import { openPopup, closePopup } from "./utils.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
-import { openPopup, closePopup } from "./utils.js";
 
 
 const profileName = main.querySelector('.profile__name');
