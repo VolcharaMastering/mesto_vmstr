@@ -1,4 +1,4 @@
-import { initialCards, photos, main, popupProfile, popupNewImage, popups, closePopupButtons, profileForm, cardForm, validationList } from "./variables.js";
+import { initialCards, photos, main, popupProfile, popupNewImage, popups, closePopupButtons, profileForm, cardForm, cardTemplate, validationList } from "./variables.js";
 import { openPopup, closePopup } from "./utils.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
@@ -8,8 +8,8 @@ const profileName = main.querySelector('.profile__name');
 const profileDescript = main.querySelector('.profile__description');
 const returnName = profileForm.elements.name;
 const returnDescript = profileForm.elements.description;
-//----inputs from form-----
 
+//----inputs from form-----
 const newTitle = cardForm.elements.title;
 const newLink = cardForm.elements.link;
 
@@ -20,7 +20,7 @@ const profileAddButton = main.querySelector('.profile__add-button');
 //=======functions=========
 
 const makeNewCard = (newCardName, imageLink) => {
-  const card = new Card(newCardName, imageLink);
+  const card = new Card(newCardName, imageLink, cardTemplate);
   const returnCard = card.makeCard();
   return returnCard;
 }
@@ -75,9 +75,10 @@ profileAddButton.addEventListener('click', function () {
   cardFormValidate.resetValidation();
 });
 popups.forEach(function (item, id) {
+  //Для ревьюера. 
+  //Возможно я что-то не понимаю, но тут обращаюсь не к элементу на странице по [id] а прохожу по массиву popups и каждому вешаю слушатель закрытия. Изменение вёрстки вроде не должно повлиять. 
   closePopupButtons[id].addEventListener('click', function () {
     closePopup(item);
   });
   item.addEventListener('click', closePopupByBackground);
 });
-

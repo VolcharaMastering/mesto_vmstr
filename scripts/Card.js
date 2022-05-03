@@ -1,16 +1,14 @@
 import { openImage } from "./utils.js";
 
 export class Card {
-    constructor(newCardName, imageLink) {
+    constructor(newCardName, imageLink, cardTemplate) {
         this._newCardName = newCardName;
         this._imageLink = imageLink;
+        this._template = cardTemplate;
     }
 
     _getTemplate = () => {
-        const cardTemplate = document
-            .querySelector('.template-card')
-            .content
-            .cloneNode(true);
+        const cardTemplate = this._template.content.cloneNode(true);
         return cardTemplate;
     }
 
