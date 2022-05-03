@@ -25,6 +25,15 @@ const initialCards = [
   }
 ];
 
+const validationList = {
+  activeForm: '.popup__inputs',
+  formInput: '.popup__input',
+  popupSaveButton: '.popup__save',
+  popupDisableButton: 'popup__save_disable',
+  inputError: 'popup__input_type_error',
+  activeError: 'popup__input_error_active'
+};
+
 const main = document.querySelector('.gallery');
 const photos = main.querySelector('.photos');
 const popupProfile = document.querySelector('.popup_editor');
@@ -34,5 +43,6 @@ const popups = document.querySelectorAll('.popup');
 const closePopupButtons = document.querySelectorAll('.popup__close');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
+const cardTemplate = document.querySelector('.template-card').content.cloneNode(true);
 
-export { initialCards, photos, main, popupProfile, popupNewImage, popupBigImage, popups, closePopupButtons, profileForm, cardForm };
+export { initialCards, photos, main, popupProfile, popupNewImage, popupBigImage, popups, closePopupButtons, profileForm, cardForm, cardTemplate, validationList };

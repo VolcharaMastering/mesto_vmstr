@@ -1,4 +1,3 @@
-//import { renderCard } from "./index.js";
 import { openImage } from "./utils.js";
 
 export class Card {
