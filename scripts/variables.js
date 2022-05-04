@@ -39,12 +39,9 @@ const photos = main.querySelector('.photos');
 const popupProfile = document.querySelector('.popup_editor');
 const popupNewImage = document.querySelector('.popup_adder');
 const popupBigImage = document.querySelector('.popup_big-image');
-const templateCard = document.querySelector('.template-card');
 const popups = document.querySelectorAll('.popup');
-const closePopupButtons = document.querySelectorAll('.popup__close');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
-const cardTemplate = document.querySelector('.template-card');
 
 export { initialCards, photos, main, popupProfile, popupNewImage, popupBigImage, 
-  popups, closePopupButtons, profileForm, cardForm, cardTemplate, validationList };
+  popups, profileForm, cardForm, validationList };

@@ -1,4 +1,4 @@
-import { initialCards, photos, main, popupProfile, popupNewImage, popups, closePopupButtons, profileForm, cardForm, cardTemplate, validationList } from "./variables.js";
+import { initialCards, photos, main, popupProfile, popupNewImage, popups, profileForm, cardForm, validationList } from "./variables.js";
 import { openPopup, closePopup } from "./utils.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
@@ -20,7 +20,7 @@ const profileAddButton = main.querySelector('.profile__add-button');
 //=======functions=========
 
 const makeNewCard = (newCardName, imageLink) => {
-  const card = new Card(newCardName, imageLink, cardTemplate);
+  const card = new Card(newCardName, imageLink, '.template-card');
   const returnCard = card.makeCard();
   return returnCard;
 }
@@ -47,7 +47,7 @@ const saveProfile = (evt) => {
 }
 
 const closePopupByBackground = (evt) => {
-  if (evt.target === evt.currentTarget) {
+  if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
     closePopup(evt.target);
   }
 }
@@ -74,11 +74,12 @@ profileAddButton.addEventListener('click', function () {
   openPopup(popupNewImage);
   cardFormValidate.resetValidation();
 });
-popups.forEach(function (item, id) {
-  //Для ревьюера. 
-  //Возможно я что-то не понимаю, но тут обращаюсь не к элементу на странице по [id] а прохожу по массиву popups и каждому вешаю слушатель закрытия. Изменение вёрстки вроде не должно повлиять. 
-  closePopupButtons[id].addEventListener('click', function () {
-    closePopup(item);
-  });
+popups.forEach((item) => {
   item.addEventListener('click', closePopupByBackground);
+  const closePopupButton = item.querySelector('.popup__close');
+  if (closePopupButton) {
+    closePopupButton.addEventListener('click', function () {
+      closePopup(item);
+    });
+  }
 });
