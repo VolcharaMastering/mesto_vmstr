@@ -48,7 +48,8 @@ const saveProfile = (evt) => {
 
 const closePopupByBackground = (evt) => {
   if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
-    closePopup(evt.target);
+    const popupActive = document.querySelector(".popup_active");
+    closePopup(popupActive);
   }
 }
 
@@ -76,10 +77,4 @@ profileAddButton.addEventListener('click', function () {
 });
 popups.forEach((item) => {
   item.addEventListener('click', closePopupByBackground);
-  const closePopupButton = item.querySelector('.popup__close');
-  if (closePopupButton) {
-    closePopupButton.addEventListener('click', function () {
-      closePopup(item);
-    });
-  }
 });
