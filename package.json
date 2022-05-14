@@ -1,0 +1,19 @@
+{
+  "name": "mesto_vmstr",
+  "version": "0.0.1",
+  "description": "* о проекте\r * Figma\r * Как сделано\r * Планы",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VolcharaMastering/mesto_vmstr.git"
+  },
+  "author": "Aleksey Barabanov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VolcharaMastering/mesto_vmstr/issues"
+  },
+  "homepage": "https://github.com/VolcharaMastering/mesto_vmstr#readme"
+}
