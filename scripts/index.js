@@ -50,12 +50,12 @@ const addGalary= new Section ({
 }, ".photos");
 addGalary.renderItems();
 
-const openPopupProfile = () => {
+/* const openPopupProfile = () => {
   openPopup(popupProfile);
   returnName.value = profileName.textContent;
   returnDescript.value = profileDescript.textContent;
   profileFormValidate.resetValidation();
-}
+} */
 
 const saveProfile = (evt) => {
   evt.preventDefault();
@@ -64,12 +64,12 @@ const saveProfile = (evt) => {
   closePopup(popupProfile);
 }
 
-const closePopupByBackground = (evt) => {
+/* const closePopupByBackground = (evt) => {
   if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
     const popupActive = document.querySelector(".popup_active");
     closePopup(popupActive);
   }
-}
+} */
 
 //--------enable validation----------
 const profileFormValidate = new FormValidator(validationList, profileForm);
@@ -79,11 +79,11 @@ const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
 //---Clicks------
-profileForm.addEventListener('submit', saveProfile);
+/* profileForm.addEventListener('submit', saveProfile);
 cardForm.addEventListener('submit', ()=>{
   addGalary.prepends(returnCard);
   addGalary.renderItems();
-});
+}); */
 
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {

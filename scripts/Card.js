@@ -1,4 +1,4 @@
-import { openImage } from "./utils.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 export class Card {
     constructor(item, selectorTemplate) {
@@ -28,7 +28,8 @@ export class Card {
             this._toggleLike(this._cardLike);
         });
         this._cardImage.addEventListener('click', () => {
-            openImage(this._newCardName, this._imageLink);
+            const openedImage= new PopupWithImage(this._cardTemplate);
+            openedImage.open(this._newCardName, this._imageLink);
         });
     }
 
