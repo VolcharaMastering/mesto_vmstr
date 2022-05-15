@@ -25,6 +25,13 @@ const initialCards = [
   }
 ];
 
+const userProfile = [
+  {
+    name: '.profile__name',
+    descript: '.profile__description'
+  }
+];
+
 const validationList = {
   activeForm: '.popup__inputs',
   formInput: '.popup__input',
@@ -43,5 +50,5 @@ const popups = document.querySelectorAll('.popup');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
 
-export { initialCards, main, popupProfile, popupNewImage, popupBigImage, 
+export { initialCards, userProfile, main, popupProfile, popupNewImage, popupBigImage, 
   popups, profileForm, cardForm, validationList };

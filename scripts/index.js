@@ -1,12 +1,16 @@
-import { initialCards, main, popupProfile, popupNewImage, popups, profileForm, cardForm, validationList } from "./variables.js";
-import { openPopup, closePopup } from "./utils.js";
+import { initialCards, main, userProfile, popupProfile, popupNewImage, popups, profileForm, cardForm, validationList } from "./variables.js";
+// import { openPopup, closePopup } from "./utils.js";
 import { Card } from "./Card.js";
 import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 
-
+/* 
 const profileName = main.querySelector('.profile__name');
-const profileDescript = main.querySelector('.profile__description');
+const profileDescript = main.querySelector('.profile__description'); */
+
+
+
+
 const returnName = profileForm.elements.name;
 const returnDescript = profileForm.elements.description;
 
@@ -85,12 +89,12 @@ cardForm.addEventListener('submit', ()=>{
   addGalary.renderItems();
 }); */
 
-profileOpenButton.addEventListener('click', openPopupProfile)
+// profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
   cardForm.reset();
   openPopup(popupNewImage);
   cardFormValidate.resetValidation();
 });
-popups.forEach((item) => {
+/* popups.forEach((item) => {
   item.addEventListener('click', closePopupByBackground);
-});
+}); */
