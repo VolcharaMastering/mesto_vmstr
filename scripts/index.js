@@ -1,6 +1,7 @@
-import { initialCards, photos, main, popupProfile, popupNewImage, popups, profileForm, cardForm, validationList } from "./variables.js";
+import { initialCards, main, popupProfile, popupNewImage, popups, profileForm, cardForm, validationList } from "./variables.js";
 import { openPopup, closePopup } from "./utils.js";
 import { Card } from "./Card.js";
+import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
 
 
@@ -19,18 +20,35 @@ const profileAddButton = main.querySelector('.profile__add-button');
 
 //=======functions=========
 
-const makeNewCard = (newCardName, imageLink) => {
+/* const makeNewCard = (newCardName, imageLink) => {
   const card = new Card(newCardName, imageLink, '.template-card');
   const returnCard = card.makeCard();
   return returnCard;
-}
-const renderCard = (evt) => {
+} */
+
+/* const renderCard = (evt) => {
   evt.preventDefault();
   const newCard = makeNewCard(newTitle.value, newLink.value);
   photos.prepend(newCard);
   closePopup(popupNewImage);
   cardForm.reset();
-}
+} */
+
+//---------init cards array----------
+/* initialCards.forEach(item => {
+  const newCard = makeNewCard(item.name, item.link);
+  photos.append(newCard);
+}); */
+
+const addGalary= new Section ({
+  items: initialCards,
+  renderer: (item)=>{
+    const card = new Card(item, '.template-card');
+    const returnCard = card.makeCard();
+    addGalary.appends(returnCard);
+  }
+}, ".photos");
+addGalary.renderItems();
 
 const openPopupProfile = () => {
   openPopup(popupProfile);
@@ -60,15 +78,13 @@ profileFormValidate.enableValidation();
 const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
-//---------init cards array----------
-initialCards.forEach(item => {
-  const newCard = makeNewCard(item.name, item.link);
-  photos.append(newCard);
-});
-
 //---Clicks------
 profileForm.addEventListener('submit', saveProfile);
-cardForm.addEventListener('submit', renderCard);
+cardForm.addEventListener('submit', ()=>{
+  addGalary.prepends(returnCard);
+  addGalary.renderItems();
+});
+
 profileOpenButton.addEventListener('click', openPopupProfile)
 profileAddButton.addEventListener('click', function () {
   cardForm.reset();

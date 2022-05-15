@@ -35,7 +35,7 @@ const validationList = {
 };
 
 const main = document.querySelector('.gallery');
-const photos = main.querySelector('.photos');
+//const photos = main.querySelector('.photos');
 const popupProfile = document.querySelector('.popup_editor');
 const popupNewImage = document.querySelector('.popup_adder');
 const popupBigImage = document.querySelector('.popup_big-image');
@@ -43,5 +43,5 @@ const popups = document.querySelectorAll('.popup');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
 
-export { initialCards, photos, main, popupProfile, popupNewImage, popupBigImage, 
+export { initialCards, main, popupProfile, popupNewImage, popupBigImage, 
   popups, profileForm, cardForm, validationList };

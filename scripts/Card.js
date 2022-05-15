@@ -1,9 +1,9 @@
 import { openImage } from "./utils.js";
 
 export class Card {
-    constructor(newCardName, imageLink, selectorTemplate) {
-        this._newCardName = newCardName;
-        this._imageLink = imageLink;
+    constructor(item, selectorTemplate) {
+        this._newCardName = item.name;
+        this._imageLink = item.link;
         this._selector = selectorTemplate;
     }
 
