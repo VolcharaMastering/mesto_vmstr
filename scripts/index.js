@@ -3,6 +3,7 @@ import { initialCards, main, userProfile, popupProfile, popupNewImage, popups, p
 import { Card } from "./Card.js";
 import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
+import { PopupWithImage } from "./PopupWithImage.js";
 
 /* 
 const profileName = main.querySelector('.profile__name');
@@ -44,10 +45,15 @@ const profileAddButton = main.querySelector('.profile__add-button');
   photos.append(newCard);
 }); */
 
+const handleCardClick=(cardName,cardLink)=>{
+  const bigImage=new PopupWithImage('.popup_big-image');
+  bigImage.open(cardName,cardLink);
+}
+
 const addGalary= new Section ({
   items: initialCards,
   renderer: (item)=>{
-    const card = new Card(item, '.template-card');
+    const card = new Card(item, '.template-card', handleCardClick);
     const returnCard = card.makeCard();
     addGalary.appends(returnCard);
   }
