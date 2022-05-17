@@ -42,13 +42,11 @@ const validationList = {
 };
 
 const main = document.querySelector('.gallery');
-//const photos = main.querySelector('.photos');
-const popupProfile = document.querySelector('.popup_editor');
 const popupNewImage = document.querySelector('.popup_adder');
 const popupBigImage = document.querySelector('.popup_big-image');
 const popups = document.querySelectorAll('.popup');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
 
-export { initialCards, userProfile, main, popupProfile, popupNewImage, popupBigImage, 
+export { initialCards, userProfile, main, popupNewImage, popupBigImage, 
   popups, profileForm, cardForm, validationList };
