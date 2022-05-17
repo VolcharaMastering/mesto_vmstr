@@ -1,40 +1,33 @@
 import { main } from "./variables.js";
 
 export class Popup {
-    constructor(selector){
-        this._selector=document.querySelector(selector);
-        this._closeButton = this._selector.querySelector(".popup__close");
-        this._addClose = () => this._activateHandleEscapeKey;
+    constructor(selector) {
+        this._selector = document.querySelector(selector);
     }
-    open = () => {
+    open() {
         this._selector.classList.add('popup_active');
-        this._activateHandleEscapeKey();
+        this._handleEscClose();
         this.setEventListeners();
     }
 
-    close = () => {
+    close() {
         this._selector.classList.remove('popup_active');
-        this._removeHandleEscapeKey();
+        document.removeEventListener('keydown', this._escCloseListen);
     }
 
-    _handleEscClose(evt){
-        if (evt.key === 'Escape') {
-            this.close();
+    _handleEscClose = () => {
+        document.addEventListener('keydown', this._escCloseListen = (evt) => {
+            if (evt.key === 'Escape') {
+                this.close();
+            }
+        });
     }
-}
 
-    _activateHandleEscapeKey = () => {
-        document.addEventListener('keydown', this._handleEscClose);
-    };
-    
-    _removeHandleEscapeKey = () => {
-        document.removeEventListener('keydown', this._handleEscClose);
-    };
-
-    setEventListeners = (evt) => {
-        if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
-            //const popupActive = document.querySelector('.popup_active');
-            this.close();
-        }
+    setEventListeners = () => {
+        this._selector.addEventListener('click', (evt) => {
+            if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
+                this.close();
+            }
+        });
     }
 }

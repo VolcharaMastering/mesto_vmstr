@@ -6,13 +6,13 @@ export class PopupWithImage extends Popup{
     }
 
     open = (name,link) => {
-        
         this._bigImage=this._selector.querySelector('.popup__image');
-        this._selector.classList.add('popup_active');
+        //this._selector.classList.add('popup_active');
         this._bigImage.setAttribute('src', link);
         this._bigImage.setAttribute('alt', 'Увеличенное фото из галереи: ' + name);
         this._selector.querySelector('.popup__image-caption').textContent = name;
-        super._activateHandleEscapeKey;
+        //super._activateHandleEscapeKey;
+        super.open();
     }
 }
 
