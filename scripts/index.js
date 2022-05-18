@@ -1,4 +1,5 @@
-import { initialCards, main, popupNewImage, profileForm, cardForm, validationList } from "./variables.js";
+import { initialCards, userProfile, main, popupNewImage, popupBigImage, 
+  popups, profileForm, cardForm, validationList } from "./variables.js";
 import { Card } from "./Card.js";
 import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
@@ -6,9 +7,9 @@ import { PopupWithImage } from "./PopupWithImage.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { UserInfo } from "./UserInfo.js";
 
-/* 
+
 const profileName = main.querySelector('.profile__name');
-const profileDescript = main.querySelector('.profile__description'); */
+const profileDescript = main.querySelector('.profile__description');
 
 
 
@@ -57,29 +58,37 @@ const addGalary= new Section ({
 }, ".photos");
 addGalary.renderItems();
 
-const popupProfile= new PopupWithForm(
+/* const popupProfile= new PopupWithForm(
   '.popup_editor',
-  formSubmit = (returnName,returnDescript)=>{
+  formSubmit: (returnName,returnDescript)=>{
     evt.preventDefault();
     profileName.textContent = returnName.value;
     profileDescript.textContent = returnDescript.value;
     popupProfile.close();
   }
-)
+); */
+const addNewCard=(title,link)=>{
+  const newCard = new Card({title,link}, '.template-card', handleCardClick);
+  const newReturnCard = newCard.makeCard();
+  addGalary.preppends(newReturnCard);
+}
 
-const popupNewImage=new PopupWithForm(
+const popupImageForm=new PopupWithForm(
   '.popup_adder',
-  formSubmit = (newCardDescribe)=>{
-    const newCard = new Card(profileDescribe, '.template-card', handleCardClick);
-    const newReturnCard = newCard.makeCard();
-    addGalary.preppends(newReturnCard);
+  (title,link) =>{
+    addNewCard(title,link);
+    console.log('CARD');
+    popupImageForm.setEventListeners();
+    console.log('LISTEN');
+    popupImageForm.close();
+    console.log('CLOSE');
   }
-)
+);
 
 
 
-const userInfo=new UserInfo(profileName.textContent,profileDescript.textContent);
-    const profile= userInfo.getUserInfo();
+// const userInfo=new UserInfo(profileName.textContent,profileDescript.textContent);
+//     const profile= userInfo.getUserInfo();
 
 /* profileForm.addEventListener('submit', saveProfile);
 cardForm.addEventListener('submit', ()=>{
@@ -102,7 +111,10 @@ cardForm.addEventListener('submit', ()=>{
   closePopup(popupProfile);
 } */
 
-
+profileAddButton.addEventListener('click', ()=>{
+  profileFormValidate.resetValidation();
+  popupImageForm.open();
+})
 //--------enable validation----------
 const profileFormValidate = new FormValidator(validationList, profileForm);
 profileFormValidate.enableValidation();
@@ -111,4 +123,4 @@ const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
 
-  cardForm.reset();
+  
