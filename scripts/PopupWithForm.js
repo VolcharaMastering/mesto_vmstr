@@ -17,7 +17,7 @@ export class PopupWithForm extends Popup{
         const newLink = this._selector.elements.link;
     }
 
-    setEventListeners(){
+    setEventListeners(evt){
         super.setEventListeners();
         this._form.addEventListener('submit', (evt)=>{
             evt.preventDefault();

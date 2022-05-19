@@ -11,8 +11,6 @@ import { UserInfo } from "./UserInfo.js";
 const profileName = main.querySelector('.profile__name');
 const profileDescript = main.querySelector('.profile__description');
 
-
-
 const profileDescribe=[
   {
     returnName: profileForm.elements.name,
@@ -33,7 +31,24 @@ const newCardDescribe=[
 const profileOpenButton = main.querySelector('.profile__edit-button');
 const profileAddButton = main.querySelector('.profile__add-button');
 
+//--------enable validation----------
+const profileFormValidate = new FormValidator(validationList, profileForm);
+profileFormValidate.enableValidation();
+
+const cardFormValidate = new FormValidator(validationList, cardForm);
+cardFormValidate.enableValidation();
+
 //=======functions=========
+const handleCardClick=(cardName,cardLink)=>{
+  const bigImage=new PopupWithImage('.popup_big-image');
+  bigImage.open(cardName,cardLink);
+}
+
+const addNewCard=(title,link)=>{
+  const newCard = new Card({title,link}, '.template-card', handleCardClick);
+  const newReturnCard = newCard.makeCard();
+  addGalary.preppends(newReturnCard);
+}
 
 /* const makeNewCard = (newCardName, imageLink) => {
   const card = new Card(newCardName, imageLink, '.template-card');
@@ -41,12 +56,7 @@ const profileAddButton = main.querySelector('.profile__add-button');
   return returnCard;
 } */
 
-
-
-const handleCardClick=(cardName,cardLink)=>{
-  const bigImage=new PopupWithImage('.popup_big-image');
-  bigImage.open(cardName,cardLink);
-}
+//=======classes and callbacks=========
 
 const addGalary= new Section ({
   items: initialCards,
@@ -58,6 +68,13 @@ const addGalary= new Section ({
 }, ".photos");
 addGalary.renderItems();
 
+const popupImageForm=new PopupWithForm(
+  '.popup_adder',
+  (title,link) =>{
+    addNewCard(title,link);
+    //popupImageForm.close();
+  }
+);
 /* const popupProfile= new PopupWithForm(
   '.popup_editor',
   formSubmit: (returnName,returnDescript)=>{
@@ -67,60 +84,18 @@ addGalary.renderItems();
     popupProfile.close();
   }
 ); */
-const addNewCard=(title,link)=>{
-  const newCard = new Card({title,link}, '.template-card', handleCardClick);
-  const newReturnCard = newCard.makeCard();
-  addGalary.preppends(newReturnCard);
-}
-
-const popupImageForm=new PopupWithForm(
-  '.popup_adder',
-  (title,link) =>{
-    addNewCard(title,link);
-    console.log('CARD');
-    popupImageForm.setEventListeners();
-    console.log('LISTEN');
-    popupImageForm.close();
-    console.log('CLOSE');
-  }
-);
-
-
 
 // const userInfo=new UserInfo(profileName.textContent,profileDescript.textContent);
 //     const profile= userInfo.getUserInfo();
 
-/* profileForm.addEventListener('submit', saveProfile);
-cardForm.addEventListener('submit', ()=>{
-  addGalary.prepends(returnCard);
-  addGalary.renderItems();
-}); */
-
-
-/* const openPopupProfile = () => {
-  openPopup(popupProfile);
-  returnName.value = profileName.textContent;
-  returnDescript.value = profileDescript.textContent;
-  profileFormValidate.resetValidation();
-} */
-
-/* const saveProfile = (evt) => {
-  evt.preventDefault();
-  profileName.textContent = returnName.value;
-  profileDescript.textContent = returnDescript.value;
-  closePopup(popupProfile);
-} */
+//==========buttons listeners===========
 
 profileAddButton.addEventListener('click', ()=>{
   profileFormValidate.resetValidation();
   popupImageForm.open();
+ 
 })
-//--------enable validation----------
-const profileFormValidate = new FormValidator(validationList, profileForm);
-profileFormValidate.enableValidation();
-
-const cardFormValidate = new FormValidator(validationList, cardForm);
-cardFormValidate.enableValidation();
+popupImageForm.setEventListeners();
 
 
   
