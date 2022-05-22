@@ -1,5 +1,7 @@
-import { initialCards, userProfile, main, popupNewImage, popupBigImage, 
-  popups, profileForm, cardForm, validationList } from "./variables.js";
+import {
+  initialCards, userProfile, main, popupNewImage, popupBigImage,
+  popups, profileForm, cardForm, validationList
+} from "./variables.js";
 import { Card } from "./Card.js";
 import { Section } from "./Section.js";
 import { FormValidator } from "./FormValidator.js";
@@ -11,20 +13,20 @@ import { UserInfo } from "./UserInfo.js";
 const profileName = main.querySelector('.profile__name');
 const profileDescript = main.querySelector('.profile__description');
 
-const profileDescribe=[
+const profileDescribe = [
   {
     returnName: profileForm.elements.name,
-returnDescript: profileForm.elements.description
+    returnDescript: profileForm.elements.description
   }
 ];
 // const returnName = profileForm.elements.name;
 // const returnDescript = profileForm.elements.description;
 
-const newCardDescribe=[
-{
-  newTitle: cardForm.elements.title,
-   newLink: cardForm.elements.link
-}
+const newCardDescribe = [
+  {
+    newTitle: cardForm.elements.title,
+    newLink: cardForm.elements.link
+  }
 ];
 
 //-----buttons-------
@@ -39,15 +41,18 @@ const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
 //=======functions=========
-const handleCardClick=(cardName,cardLink)=>{
-  const bigImage=new PopupWithImage('.popup_big-image');
-  bigImage.open(cardName,cardLink);
+const handleCardClick = (cardName, cardLink) => {
+  const bigImage = new PopupWithImage('.popup_big-image');
+  bigImage.open(cardName, cardLink);
+  bigImage.setEventListeners();
 }
 
-const addNewCard=(title,link)=>{
-  const newCard = new Card({title,link}, '.template-card', handleCardClick);
+
+const addNewCard = (describe) => {
+  const newCard = new Card(describe, '.template-card', handleCardClick);
   const newReturnCard = newCard.makeCard();
-  addGalary.preppends(newReturnCard);
+  return newReturnCard;
+  
 }
 
 /* const makeNewCard = (newCardName, imageLink) => {
@@ -58,23 +63,26 @@ const addNewCard=(title,link)=>{
 
 //=======classes and callbacks=========
 
-const addGalary= new Section ({
+const addGalary = new Section({
   items: initialCards,
-  renderer: (item)=>{
-    const card = new Card(item, '.template-card', handleCardClick);
-    const returnCard = card.makeCard();
+  renderer: (item) => {
+    const returnCard=addNewCard(item);
     addGalary.appends(returnCard);
   }
 }, ".photos");
 addGalary.renderItems();
 
-const popupImageForm=new PopupWithForm(
+const popupImageForm = new PopupWithForm(
   '.popup_adder',
-  (title,link) =>{
-    addNewCard(title,link);
-    //popupImageForm.close();
+  {
+    submitForm: (describe) => {
+      const returnCard=addNewCard(describe);
+      addGalary.prepends(returnCard);
+      popupImageForm.close();
+    }
   }
 );
+
 /* const popupProfile= new PopupWithForm(
   '.popup_editor',
   formSubmit: (returnName,returnDescript)=>{
@@ -90,12 +98,11 @@ const popupImageForm=new PopupWithForm(
 
 //==========buttons listeners===========
 
-profileAddButton.addEventListener('click', ()=>{
+profileAddButton.addEventListener('click', () => {
   profileFormValidate.resetValidation();
   popupImageForm.open();
- 
+  popupImageForm.setEventListeners();
 })
-popupImageForm.setEventListeners();
 
 
-  
+

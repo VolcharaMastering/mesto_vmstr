@@ -7,7 +7,7 @@ export class Popup {
     open() {
         this._selector.classList.add('popup_active');
         this._handleEscClose();
-        this.setEventListeners();
+        //this.setEventListeners();
     }
 
     close() {
@@ -23,11 +23,12 @@ export class Popup {
         });
     }
 
-    setEventListeners = () => {
+    setEventListeners() {
         this._selector.addEventListener('click', (evt) => {
             if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
                 this.close();
             }
         });
+        console.log('ALERTinPopup');
     }
 }
