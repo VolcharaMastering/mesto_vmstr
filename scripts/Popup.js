@@ -13,6 +13,7 @@ export class Popup {
     close() {
         this._selector.classList.remove('popup_active');
         document.removeEventListener('keydown', this._escCloseListen);
+        this._selector.removeEventListener('click', this._closeListener);
     }
 
     _handleEscClose = () => {
@@ -24,11 +25,10 @@ export class Popup {
     }
 
     setEventListeners() {
-        this._selector.addEventListener('click', (evt) => {
+        this._selector.addEventListener('click', this._closeListener = (evt) => {
             if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
                 this.close();
             }
         });
-        console.log('ALERTinPopup');
     }
 }
