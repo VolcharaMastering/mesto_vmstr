@@ -5,7 +5,7 @@ import { FormValidator } from "./components/FormValidator.js";
 import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { UserInfo } from "./components/UserInfo.js";
-import './styles/index.css';
+import "./styles/index.css";
 
 
 const profileDescribe = {
