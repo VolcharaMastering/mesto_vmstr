@@ -1,10 +1,11 @@
-import { initialCards, main, profileForm, cardForm, validationList } from "./variables.js";
-import { Card } from "./Card.js";
-import { Section } from "./Section.js";
-import { FormValidator } from "./FormValidator.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
+import { initialCards, main, profileForm, cardForm, validationList } from "./components/variables";
+import { Card } from "./components/Card";
+import { Section } from "./components/Section.js";
+import { FormValidator } from "./components/FormValidator.js";
+import { PopupWithImage } from "./components/PopupWithImage.js";
+import { PopupWithForm } from "./components/PopupWithForm.js";
+import { UserInfo } from "./components/UserInfo.js";
+import './styles/index.css';
 
 
 const profileDescribe = {
