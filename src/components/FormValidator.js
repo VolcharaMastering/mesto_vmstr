@@ -64,8 +64,6 @@ export class FormValidator {
     }
 
     resetValidation = () => {
-        const inputArray = Array.from(this._form.querySelectorAll(this._formInput));
-        const saveButton = this._form.querySelector(this._popupSaveButton);
         this._toggleButtonState();
         this._inputArray.forEach((input) => {
             this._hideInputError(input);

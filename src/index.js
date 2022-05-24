@@ -23,9 +23,7 @@ const cardAddButton = main.querySelector('.profile__add-button');
 
 //=======functions=========
 const handleCardClick = (cardName, cardLink) => {
-  const bigImage = new PopupWithImage('.popup_big-image');
   bigImage.open(cardName, cardLink);
-  bigImage.setEventListeners();
 }
 
 const addNewCard = (describe) => {
@@ -36,6 +34,9 @@ const addNewCard = (describe) => {
 
 
 //=======classes and callbacks=========
+const bigImage = new PopupWithImage('.popup_big-image');
+bigImage.setEventListeners();
+
 const addGalary = new Section({
   items: initialCards,
   renderer: (item) => {
@@ -47,14 +48,13 @@ addGalary.renderItems();
 
 const popupCardForm = new PopupWithForm(
   '.popup_adder',
-
   (describe) => {
     const returnCard = addNewCard(describe);
     addGalary.prepends(returnCard);
     popupCardForm.close();
-    profileFormValidate.resetValidation();
   }
 );
+popupCardForm.setEventListeners();
 
 const userInfo = new UserInfo(profileDescribe);
 
@@ -63,9 +63,9 @@ const popupProfile = new PopupWithForm(
   (newInputs) => {
     userInfo.setUserInfo(newInputs);
     popupProfile.close();
-    profileFormValidate.resetValidation();
   }
 );
+popupProfile.setEventListeners();
 
 //--------enable validation----------
 const profileFormValidate = new FormValidator(validationList, profileForm);
@@ -78,9 +78,8 @@ cardFormValidate.enableValidation();
 //==========buttons listeners===========
 
 cardAddButton.addEventListener('click', () => {
-  profileFormValidate.resetValidation();
   popupCardForm.open();
-  popupCardForm.setEventListeners();
+  cardFormValidate.resetValidation();
 })
 
 profileOpenButton.addEventListener('click', () => {
@@ -88,7 +87,6 @@ profileOpenButton.addEventListener('click', () => {
   const oldProfile = userInfo.getUserInfo();
   inputName.value = oldProfile.userName;
   inputnDescript.value = oldProfile.descript;
-  popupProfile.setEventListeners();
   profileFormValidate.resetValidation();
 })
 

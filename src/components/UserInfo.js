@@ -12,7 +12,6 @@ export class UserInfo {
     }
 
     setUserInfo(newInputs) {
-        console.log(newInputs);
         this._name.textContent = newInputs.name;
         this._description.textContent = newInputs.description;
     }

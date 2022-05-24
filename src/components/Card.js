@@ -1,5 +1,3 @@
-import { PopupWithImage } from "./PopupWithImage.js";
-
 export class Card {
     constructor(item, selectorTemplate, handleCardClick) {
         this._newCardName = item.name;
@@ -20,6 +18,7 @@ export class Card {
     }
 
     _deleteImage = (evt) => {
+        this._cardTemplate = null;
         evt.target.closest('.card').remove();
     }
 

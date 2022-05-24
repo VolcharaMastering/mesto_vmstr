@@ -3,8 +3,8 @@ import { Popup } from "./Popup.js";
 export class PopupWithForm extends Popup {
     constructor(selector, submitForm) {
         super(selector);
-        this._form = this._selector.querySelector('.popup__inputs');
-        this._inputArray = this._selector.querySelectorAll('.popup__input');
+        this._form = this._popup.querySelector('.popup__inputs');
+        this._inputArray = this._popup.querySelectorAll('.popup__input');
         this._submitForm = submitForm;
     }
 
@@ -27,6 +27,5 @@ export class PopupWithForm extends Popup {
     close() {
         super.close();
         this._form.reset();
-        this._form.removeEventListener('submit', this._submitListener);
     }
 }
