@@ -8,8 +8,9 @@ module.exports = {
   entry: { main: './src/index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js',
-        publicPath: ''
+    filename: 'main.[hash].js',
+        publicPath: '',
+    clean: true,
   },
   mode: 'development', // добавили режим разработчика
   devServer: {
@@ -19,6 +20,7 @@ module.exports = {
 
     open: true // сайт будет открываться сам при запуске npm run dev
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [ // rules — это массив правил
       // добавим в него объект правил для бабеля
