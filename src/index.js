@@ -37,9 +37,9 @@ const addNewCard = (describe) => {
 //=======classes and callbacks=========
 
 /////////--getting cards from server--////////
-const api = new Api('https://mesto.nomoreparties.co/v1/cohort-43/cards', token);
+const apiCards = new Api('https://mesto.nomoreparties.co/v1/cohort-43/cards', token);
 
-api.getCards()
+apiCards.getCards()
   .then((dbCards) => {
     console.log('dbCards', dbCards);
     const addGalary = new Section({
@@ -51,6 +51,9 @@ api.getCards()
     }, ".photos");
     addGalary.renderItems();
   })
+
+const apiUser=new Api('https://mesto.nomoreparties.co/v1/cohort-43/users/me', token);
+
 
 
 const bigImage = new PopupWithImage('.popup_big-image');
