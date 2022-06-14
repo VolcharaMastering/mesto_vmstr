@@ -1,10 +1,11 @@
-import { initialCards, main, profileForm, cardForm, validationList } from "./components/variables";
+import { token, main, profileForm, cardForm, validationList } from "./components/variables";
 import { Card } from "./components/Card";
 import { Section } from "./components/Section.js";
 import { FormValidator } from "./components/FormValidator.js";
 import { PopupWithImage } from "./components/PopupWithImage.js";
 import { PopupWithForm } from "./components/PopupWithForm.js";
 import { UserInfo } from "./components/UserInfo.js";
+import { Api } from "./components/Api.js";
 import "./styles/index.css";
 
 
@@ -34,17 +35,26 @@ const addNewCard = (describe) => {
 
 
 //=======classes and callbacks=========
+
+/////////--getting cards from server--////////
+const api = new Api('https://mesto.nomoreparties.co/v1/cohort-43/cards', token);
+
+api.getCards()
+  .then((dbCards) => {
+    console.log('dbCards', dbCards);
+    const addGalary = new Section({
+      items: dbCards,
+      renderer: (item) => {
+        const returnCard = addNewCard(item);
+        addGalary.appends(returnCard);
+      }
+    }, ".photos");
+    addGalary.renderItems();
+  })
+
+
 const bigImage = new PopupWithImage('.popup_big-image');
 bigImage.setEventListeners();
-
-const addGalary = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const returnCard = addNewCard(item);
-    addGalary.appends(returnCard);
-  }
-}, ".photos");
-addGalary.renderItems();
 
 const popupCardForm = new PopupWithForm(
   '.popup_adder',
