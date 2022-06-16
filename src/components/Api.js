@@ -8,7 +8,7 @@ export class Api {
         }
     }
 
-    getCards() {
+    getData() {
         return fetch(this._url, { headers: this._headers })
             .then((res) => {
                 if (res.ok) {
