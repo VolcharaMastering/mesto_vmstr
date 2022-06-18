@@ -22,13 +22,46 @@ const profileOpenButton = main.querySelector('.profile__edit-button');
 const cardAddButton = main.querySelector('.profile__add-button');
 
 
+const apiUser = new Api('users/me', token);
+apiUser.getData()
+  .then((usersInfo) => {
+    window.myId = usersInfo._id;
+    console.log('usersInfo', usersInfo);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 //=======functions=========
 const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
 }
 
+const delLike = (cardId) => {
+  apiCards.delLike(`cards/${cardId}/likes`)
+  .then((res) => {
+    return res.json();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  
+  console.log("del LIKE");
+}
+
+const addLike = (cardId) => {
+  apiCards.addLike(`cards/${cardId}/likes`)  
+  .then((res) => {
+    return res.json();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+  
+  console.log("add LIKE");
+}
+
 const addNewCard = (describe) => {
-  const newCard = new Card(describe, '.template-card', handleCardClick);
+  const newCard = new Card(describe, '.template-card', handleCardClick, delLike, addLike, myId);
   const newReturnCard = newCard.makeCard();
   return newReturnCard;
 }
@@ -37,7 +70,7 @@ const addNewCard = (describe) => {
 //=======classes and callbacks=========
 
 /////////--getting cards from server--////////
-const apiCards = new Api('https://mesto.nomoreparties.co/v1/cohort-43/cards', token);
+const apiCards = new Api('cards', token);
 
 apiCards.getData()
   .then((dbCards) => {
@@ -51,18 +84,8 @@ apiCards.getData()
     addGalary.renderItems();
   })
   .catch((err) => {
-    console.log(err); 
-  }); 
-
-const apiUser=new Api('https://mesto.nomoreparties.co/v1/cohort-43/users/me', token);
-apiUser.getData()
-  .then((usersInfo) => {
-    console.log('usersInfo', usersInfo);
-    
-  })
-  .catch((err) => {
-    console.log(err); 
-  }); 
+    console.log(err);
+  });
 
 
 
