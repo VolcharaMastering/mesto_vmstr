@@ -7,6 +7,7 @@ import { PopupWithForm } from "./components/PopupWithForm.js";
 import { UserInfo } from "./components/UserInfo.js";
 import { Api } from "./components/Api.js";
 import "./styles/index.css";
+import { PopupConfirm } from "./components/PopupConfirm";
 
 
 const profileDescribe = {
@@ -22,82 +23,101 @@ const profileOpenButton = main.querySelector('.profile__edit-button');
 const cardAddButton = main.querySelector('.profile__add-button');
 
 
-const apiUser = new Api('users/me', token);
-apiUser.getData()
-  .then((usersInfo) => {
-    window.myId = usersInfo._id;
-    console.log('usersInfo', usersInfo);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
 //=======functions=========
 const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
 }
 
 const delLike = (cardId) => {
-  apiCards.delLike(`cards/${cardId}/likes`)
-  .then((res) => {
-    return res.json();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-  
-  console.log("del LIKE");
+  return api.delLike(`cards/${cardId}/likes`)
+    .then((likes) => {
+      console.log('likes=' + likes.length);
+      console.log('clikeArray=' + likes);
+      return likes;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 const addLike = (cardId) => {
-  apiCards.addLike(`cards/${cardId}/likes`)  
-  .then((res) => {
-    return res.json();
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-  
-  console.log("add LIKE");
+  return api.addLike(`cards/${cardId}/likes`)
+    .then((likes) => {
+      console.log('likes=' + likes.length);
+      console.log('clikeArray=' + likes);
+      return likes;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
-const addNewCard = (describe) => {
-  const newCard = new Card(describe, '.template-card', handleCardClick, delLike, addLike, myId);
-  const newReturnCard = newCard.makeCard();
-  return newReturnCard;
-}
+
 
 
 //=======classes and callbacks=========
 
-/////////--getting cards from server--////////
-const apiCards = new Api('cards', token);
+/////////--getting user info & cards from server--////////
 
-apiCards.getData()
-  .then((dbCards) => {
-    const addGalary = new Section({
-      items: dbCards,
-      renderer: (item) => {
-        const returnCard = addNewCard(item);
-        addGalary.appends(returnCard);
-      }
-    }, ".photos");
-    addGalary.renderItems();
+const api = new Api(token);
+api.getData('users/me')
+  .then((usersInfo) => {
+    window.myId = usersInfo._id;
+    api.getData('cards')
+      .then((dbCards) => {
+        window.addGalary = new Section({
+          items: dbCards,
+          renderer: (item) => {
+            const returnCard = addNewCard(item, myId);
+            addGalary.appends(returnCard);
+          }
+        }, ".photos");
+        addGalary.renderItems();
+      })
   })
+
   .catch((err) => {
     console.log(err);
   });
 
-
+const addNewCard = (describe, myId) => {
+  const newCard = new Card(describe, '.template-card', handleCardClick, handleCardDelete, delLike, addLike, myId);
+  const newReturnCard = newCard.makeCard();
+  return newReturnCard;
+}
 
 const bigImage = new PopupWithImage('.popup_big-image');
 bigImage.setEventListeners();
 
+const handleCardDelete = (cardId) => {
+  const confirmPopup = new PopupConfirm(
+    '.popup_question',
+    (pressOk) => {
+      api.delCard('cards/', cardId)
+        .then((res) => {
+          return res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  );
+  confirmPopup.open();
+  confirmPopup.setEventListeners();
+}
+
 const popupCardForm = new PopupWithForm(
   '.popup_adder',
-  (describe) => {
-    const returnCard = addNewCard(describe);
-    addGalary.prepends(returnCard);
-    popupCardForm.close();
+  (nameAndLink) => {
+    api.setCard('cards', nameAndLink)
+      .then((card) => {
+        const returnCard = addNewCard(card, card.owner._id);
+        addGalary.prepends(returnCard);
+        popupCardForm.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 );
 popupCardForm.setEventListeners();
