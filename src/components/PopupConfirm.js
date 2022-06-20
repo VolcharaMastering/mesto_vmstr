@@ -1,18 +1,13 @@
 import { Popup } from "./Popup.js";
 
 export class PopupConfirm extends Popup {
-    constructor(selector, pressOk) {
+    constructor(selector) {
         super(selector);
-        this._pressOk = pressOk;
+        this._pressYes = () => { };
     }
 
-    setEventListeners() {
-        const confirmButton = this._popup.querySelector('.popup__ok');
-        confirmButton.addEventListener('click', () => {
-            this._pressOk();
-            this.close();
-        });
-        super.setEventListeners();
+    setSubmitAction = (action) => {
+        this._pressYess = action;
+        console.log("ACTION");
     }
-
 }

@@ -28,6 +28,7 @@ const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
 }
 
+
 const delLike = (cardId) => {
   return api.delLike(`cards/${cardId}/likes`)
     .then((likes) => {
@@ -58,6 +59,11 @@ const addLike = (cardId) => {
 //=======classes and callbacks=========
 
 /////////--getting user info & cards from server--////////
+const bigImage = new PopupWithImage('.popup_big-image');
+bigImage.setEventListeners();
+
+const confirmPopup = new PopupConfirm('.popup_question');
+confirmPopup.setEventListeners();
 
 const api = new Api(token);
 api.getData('users/me')
@@ -81,29 +87,25 @@ api.getData('users/me')
   });
 
 const addNewCard = (describe, myId) => {
-  const newCard = new Card(describe, '.template-card', handleCardClick, handleCardDelete, delLike, addLike, myId);
+  const newCard = new Card(
+    describe, '.template-card', handleCardClick,
+    {handleCardDelete: (cardId,evt) => {
+      confirmPopup.open();
+      confirmPopup.setSubmitAction(() => {
+        console.log('SUBMIT')
+        api.delCard('cards/',cardId)
+          .then(() => {
+            newCard.delCard(evt);
+            confirmPopup.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }},
+    delLike, addLike, myId);
   const newReturnCard = newCard.makeCard();
   return newReturnCard;
-}
-
-const bigImage = new PopupWithImage('.popup_big-image');
-bigImage.setEventListeners();
-
-const handleCardDelete = (cardId) => {
-  const confirmPopup = new PopupConfirm(
-    '.popup_question',
-    (pressOk) => {
-      api.delCard('cards/', cardId)
-        .then((res) => {
-          return res;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  );
-  confirmPopup.open();
-  confirmPopup.setEventListeners();
 }
 
 const popupCardForm = new PopupWithForm(

@@ -1,5 +1,5 @@
 export class Card {
-    constructor(item, selectorTemplate, handleCardClick, handleCardDelete, delLike, addLike, myId) {
+    constructor(item, selectorTemplate, handleCardClick, {handleCardDelete}, delLike, addLike, myId) {
         this._newCardName = item.name;
         this._imageLink = item.link;
         this._getLikes = item.likes;
@@ -22,9 +22,13 @@ export class Card {
     }
 
     _deleteImage = (evt) => {
-        this._handleCardDelete(this._cardId);
+        this._handleCardDelete(this._cardId,evt);
+    }
+    delCard=(evt)=>{
+    
         this._cardTemplate = null;
         evt.target.closest('.card').remove();
+
     }
 
     _addEvents = () => {
