@@ -1,4 +1,4 @@
-import { token, main, profileForm, cardForm, validationList } from "./components/variables";
+import { token, main, profileForm, cardForm, validationList, avatarImage } from "./components/variables";
 import { Card } from "./components/Card";
 import { Section } from "./components/Section.js";
 import { FormValidator } from "./components/FormValidator.js";
@@ -8,6 +8,7 @@ import { UserInfo } from "./components/UserInfo.js";
 import { Api } from "./components/Api.js";
 import "./styles/index.css";
 import { PopupConfirm } from "./components/PopupConfirm";
+
 
 
 const profileDescribe = {
@@ -21,6 +22,9 @@ const inputnDescript = profileForm.elements.description;
 //-----buttons-------
 const profileOpenButton = main.querySelector('.profile__edit-button');
 const cardAddButton = main.querySelector('.profile__add-button');
+const avatarChangeButton=main.querySelector('.profile__avatar');
+
+console.log(avatarChangeButton);
 
 
 //=======functions=========
@@ -28,33 +32,11 @@ const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
 }
 
-
-const delLike = (cardId) => {
-  return api.delLike(`cards/${cardId}/likes`)
-    .then((likes) => {
-      console.log('likes=' + likes.length);
-      console.log('clikeArray=' + likes);
-      return likes;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const setAvatar=(avatarLink)=>{
+  console.log(avatarLink)
+  avatarImage.setAttribute('src',avatarLink);
+  // return avatarImage;
 }
-
-const addLike = (cardId) => {
-  return api.addLike(`cards/${cardId}/likes`)
-    .then((likes) => {
-      console.log('likes=' + likes.length);
-      console.log('clikeArray=' + likes);
-      return likes;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-
-
 
 //=======classes and callbacks=========
 
@@ -69,6 +51,7 @@ const api = new Api(token);
 api.getData('users/me')
   .then((usersInfo) => {
     window.myId = usersInfo._id;
+    setAvatar(usersInfo.avatar);
     api.getData('cards')
       .then((dbCards) => {
         window.addGalary = new Section({
@@ -92,7 +75,7 @@ const addNewCard = (describe, myId) => {
     {handleCardDelete: (cardId,evt) => {
       confirmPopup.open();
       confirmPopup.setSubmitAction(() => {
-        console.log('SUBMIT')
+        console.log('SUBMIT');
         api.delCard('cards/',cardId)
           .then(() => {
             newCard.delCard(evt);
@@ -102,8 +85,26 @@ const addNewCard = (describe, myId) => {
             console.log(err);
           });
       });
-    }},
-    delLike, addLike, myId);
+    },
+    delLike: (cardId) => {
+      api.delLike(`cards/${cardId}/likes`)
+      .then((item) => {
+        newCard.updateLikes(item.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, 
+    addLike: (cardId) => {
+      api.addLike(`cards/${cardId}/likes`)
+        .then((item) => {
+          newCard.updateLikes(item.likes);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }}, 
+    myId);
   const newReturnCard = newCard.makeCard();
   return newReturnCard;
 }
@@ -135,6 +136,21 @@ const popupProfile = new PopupWithForm(
 );
 popupProfile.setEventListeners();
 
+const popupAvatar = new PopupWithForm(
+  '.popup_avatar',
+  (getAvatar) => {
+    api.setAvatar('users/me/avatar', getAvatar)
+      .then((ava) => {
+        setAvatar(ava.avatar);
+        popupAvatar.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
+popupAvatar.setEventListeners();
+
 //--------enable validation----------
 const profileFormValidate = new FormValidator(validationList, profileForm);
 profileFormValidate.enableValidation();
@@ -142,12 +158,20 @@ profileFormValidate.enableValidation();
 const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
+const avatarFormValidate = new FormValidator(validationList, cardForm);
+avatarFormValidate.enableValidation();
+
 
 //==========buttons listeners===========
 
 cardAddButton.addEventListener('click', () => {
   popupCardForm.open();
   cardFormValidate.resetValidation();
+})
+
+avatarChangeButton.addEventListener('click',()=>{
+  popupAvatar.open();
+  avatarFormValidate.resetValidation();
 })
 
 profileOpenButton.addEventListener('click', () => {

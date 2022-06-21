@@ -1,5 +1,5 @@
 export class Card {
-    constructor(item, selectorTemplate, handleCardClick, {handleCardDelete}, delLike, addLike, myId) {
+    constructor(item, selectorTemplate, handleCardClick, {handleCardDelete, delLike, addLike}, myId) {
         this._newCardName = item.name;
         this._imageLink = item.link;
         this._getLikes = item.likes;
@@ -41,24 +41,10 @@ export class Card {
 
         this._cardLike.addEventListener('click', () => {
             if (this._like) {
-                this._getLikes = {};
-                Object.assign(this._getLikes, this._delLike(this._cardId));
-                console.log('get likes= ' + this._getLikes);
-                // this._getLikes = newLikes;
-                this._addLikeCounter();
+                this._delLike(this._cardId);
             }
             else {
-                this._addLike(this._cardId)
-                    .then((likes) => {
-                        console.log('count=' + likes.length);
-                        return newLikes;
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                // console.log('count=' +count);
-                // this._getLikes = newLikes;
-                this._addLikeCounter();
+                this._addLike(this._cardId);
             }
             this._cardLike.classList.toggle('card__like_active');
         });
@@ -69,15 +55,25 @@ export class Card {
     _checkLikes = () => {
         if (this._getLikes.length > 0) {
             const isLike = this._getLikes.find(item => item._id == this._myId);
-            if (isLike != undefined) {
+            if (isLike) {
                 this._cardLike.classList.add('card__like_active');
                 this._like = true;
+            }            else {
+                this._like = false;
             }
+        }else {
+            this._like = false;
         }
     }
-    _addLikeCounter = () => {
-        this._likeNumber.textContent = this._getLikes.length;
+    _addLikeCounter = (counter) => {
+        this._likeNumber.textContent = counter;
     };
+
+    updateLikes=(likes) =>{
+        this._getLikes=likes;
+        this._checkLikes();
+        this._addLikeCounter(this._getLikes.length)
+    }
 
     makeCard() {
         this._cardTemplate = this._getTemplate();
@@ -87,7 +83,7 @@ export class Card {
         this._cardLike = this._cardTemplate.querySelector('.card__like');
         this._likeNumber = this._cardTemplate.querySelector('.card__like-count');
         this._checkLikes();
-        this._addLikeCounter();
+        this._addLikeCounter(this._getLikes.length);
         this._cardImage.setAttribute('src', this._imageLink);
         this._cardImage.setAttribute('alt', 'Фото из галереи: ' + this._newCardName);
         this._cardName.textContent = this._newCardName;

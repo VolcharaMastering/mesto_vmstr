@@ -28,7 +28,7 @@ export class Api {
         .then((res) => {
             if (res.ok) {
                 console.log('resULT' +res);
-                return res;
+                return res.json();
             }
             return Promise.reject('Bug detected!');
         });
@@ -41,8 +41,8 @@ export class Api {
         })
         .then((res) => {
             if (res.ok) {
-                console.log('resULT' +res);
-                return res;
+                console.log('resULT',res);
+                return res.json();
             }
             return Promise.reject('Bug detected!');
         });
@@ -75,4 +75,17 @@ export class Api {
         });
     }
 
+    setAvatar(forUrl,linkObj){
+        return fetch(this._url+forUrl, {
+            headers: this._headers,
+            method: 'PATCH',
+            body: JSON.stringify(linkObj),
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            return Promise.reject('Bug detected!');
+        });
+    }
 }

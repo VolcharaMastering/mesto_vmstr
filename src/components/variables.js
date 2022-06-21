@@ -1,4 +1,4 @@
-const token='9ccf29bd-3d67-4cc8-8c99-82c18d019a44';
+const token = '9ccf29bd-3d67-4cc8-8c99-82c18d019a44';
 
 const userProfile = [
   {
@@ -19,5 +19,6 @@ const validationList = {
 const main = document.querySelector('.gallery');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
+const avatarImage = main.querySelector('.profile__avatar-image');
 
-export {token, main, profileForm, cardForm, validationList};
+export { token, main, profileForm, cardForm, validationList, avatarImage };
