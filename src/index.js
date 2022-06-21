@@ -70,15 +70,16 @@ api.getData('users/me')
   });
 
 const addNewCard = (describe, myId) => {
-  const newCard = new Card(
+  const card = new Card(
     describe, '.template-card', handleCardClick,
-    {handleCardDelete: (cardId,evt) => {
+    {handleCardDelete: (cardToDel) => {
+      console.log('CARDtoDEL',cardToDel)
       confirmPopup.open();
       confirmPopup.setSubmitAction(() => {
         console.log('SUBMIT');
-        api.delCard('cards/',cardId)
+        api.delCard('cards/',cardToDel._id)
           .then(() => {
-            newCard.delCard(evt);
+            card.delCard();
             confirmPopup.close();
           })
           .catch((err) => {
@@ -89,7 +90,7 @@ const addNewCard = (describe, myId) => {
     delLike: (cardId) => {
       api.delLike(`cards/${cardId}/likes`)
       .then((item) => {
-        newCard.updateLikes(item.likes);
+        card.updateLikes(item.likes);
         })
         .catch((err) => {
           console.log(err);
@@ -98,14 +99,14 @@ const addNewCard = (describe, myId) => {
     addLike: (cardId) => {
       api.addLike(`cards/${cardId}/likes`)
         .then((item) => {
-          newCard.updateLikes(item.likes);
+          card.updateLikes(item.likes);
         })
         .catch((err) => {
           console.log(err);
         });
     }}, 
     myId);
-  const newReturnCard = newCard.makeCard();
+  const newReturnCard = card.makeCard();
   return newReturnCard;
 }
 
