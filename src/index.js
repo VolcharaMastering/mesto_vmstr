@@ -1,4 +1,4 @@
-import { token, main, profileForm, cardForm, validationList, avatarImage } from "./components/variables";
+import { token, main, profileForm, cardForm, validationList, avatarImage, avatarForm } from "./components/variables";
 import { Card } from "./components/Card";
 import { Section } from "./components/Section.js";
 import { FormValidator } from "./components/FormValidator.js";
@@ -12,19 +12,18 @@ import { PopupConfirm } from "./components/PopupConfirm";
 
 
 const profileDescribe = {
-  userName: '.profile__name',
-  description: '.profile__description'
+  name: '.profile__name',
+  about: '.profile__description'
 };
 const inputName = profileForm.elements.name;
-const inputnDescript = profileForm.elements.description;
+const inputnDescript = profileForm.elements.about;
 
 
 //-----buttons-------
 const profileOpenButton = main.querySelector('.profile__edit-button');
 const cardAddButton = main.querySelector('.profile__add-button');
-const avatarChangeButton=main.querySelector('.profile__avatar');
+const avatarChangeButton = main.querySelector('.profile__avatar');
 
-console.log(avatarChangeButton);
 
 
 //=======functions=========
@@ -32,10 +31,8 @@ const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
 }
 
-const setAvatar=(avatarLink)=>{
-  console.log(avatarLink)
-  avatarImage.setAttribute('src',avatarLink);
-  // return avatarImage;
+const setAvatar = (avatarLink) => {
+  avatarImage.setAttribute('src', avatarLink);
 }
 
 //=======classes and callbacks=========
@@ -52,6 +49,7 @@ api.getData('users/me')
   .then((usersInfo) => {
     window.myId = usersInfo._id;
     setAvatar(usersInfo.avatar);
+    userInfo.setUserInfo(usersInfo);
     api.getData('cards')
       .then((dbCards) => {
         window.addGalary = new Section({
@@ -63,8 +61,10 @@ api.getData('users/me')
         }, ".photos");
         addGalary.renderItems();
       })
+      .catch((err) => {
+        console.log(err);
+      });
   })
-
   .catch((err) => {
     console.log(err);
   });
@@ -72,39 +72,39 @@ api.getData('users/me')
 const addNewCard = (describe, myId) => {
   const card = new Card(
     describe, '.template-card', handleCardClick,
-    {handleCardDelete: (cardToDel) => {
-      console.log('CARDtoDEL',cardToDel)
-      confirmPopup.open();
-      confirmPopup.setSubmitAction(() => {
-        console.log('SUBMIT');
-        api.delCard('cards/',cardToDel._id)
-          .then(() => {
-            card.delCard();
-            confirmPopup.close();
+    {
+      handleCardDelete: (cardToDel) => {
+        confirmPopup.open();
+        confirmPopup.setSubmitAction(() => {
+          api.delCard('cards/', cardToDel._id)
+            .then(() => {
+              card.delCard();
+              confirmPopup.close();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      },
+      delLike: (cardId) => {
+        api.delLike(`cards/${cardId}/likes`)
+          .then((item) => {
+            card.updateLikes(item.likes);
           })
           .catch((err) => {
             console.log(err);
           });
-      });
+      },
+      addLike: (cardId) => {
+        api.addLike(`cards/${cardId}/likes`)
+          .then((item) => {
+            card.updateLikes(item.likes);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
-    delLike: (cardId) => {
-      api.delLike(`cards/${cardId}/likes`)
-      .then((item) => {
-        card.updateLikes(item.likes);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, 
-    addLike: (cardId) => {
-      api.addLike(`cards/${cardId}/likes`)
-        .then((item) => {
-          card.updateLikes(item.likes);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }}, 
     myId);
   const newReturnCard = card.makeCard();
   return newReturnCard;
@@ -131,16 +131,23 @@ const userInfo = new UserInfo(profileDescribe);
 const popupProfile = new PopupWithForm(
   '.popup_editor',
   (newInputs) => {
-    userInfo.setUserInfo(newInputs);
-    popupProfile.close();
+    api.setProfile('users/me', newInputs)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+        popupProfile.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+
 );
 popupProfile.setEventListeners();
 
 const popupAvatar = new PopupWithForm(
   '.popup_avatar',
   (getAvatar) => {
-    api.setAvatar('users/me/avatar', getAvatar)
+    api.setProfile('users/me/avatar', getAvatar)
       .then((ava) => {
         setAvatar(ava.avatar);
         popupAvatar.close();
@@ -159,7 +166,7 @@ profileFormValidate.enableValidation();
 const cardFormValidate = new FormValidator(validationList, cardForm);
 cardFormValidate.enableValidation();
 
-const avatarFormValidate = new FormValidator(validationList, cardForm);
+const avatarFormValidate = new FormValidator(validationList, avatarForm);
 avatarFormValidate.enableValidation();
 
 
@@ -170,7 +177,7 @@ cardAddButton.addEventListener('click', () => {
   cardFormValidate.resetValidation();
 })
 
-avatarChangeButton.addEventListener('click',()=>{
+avatarChangeButton.addEventListener('click', () => {
   popupAvatar.open();
   avatarFormValidate.resetValidation();
 })
@@ -178,8 +185,8 @@ avatarChangeButton.addEventListener('click',()=>{
 profileOpenButton.addEventListener('click', () => {
   popupProfile.open();
   const oldProfile = userInfo.getUserInfo();
-  inputName.value = oldProfile.userName;
-  inputnDescript.value = oldProfile.descript;
+  inputName.value = oldProfile.name;
+  inputnDescript.value = oldProfile.about;
   profileFormValidate.resetValidation();
 })
 

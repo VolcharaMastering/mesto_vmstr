@@ -2,7 +2,6 @@ export class Api {
     constructor(token) {
         this._url = 'https://mesto.nomoreparties.co/v1/cohort-43/';
         this._token = token;
-        // this._forUrl=forUrl;
         this._headers = {
             'Content-type': 'application/json',
             'authorization': '9ccf29bd-3d67-4cc8-8c99-82c18d019a44'
@@ -15,7 +14,7 @@ export class Api {
                 if (res.ok) {
                     return res.json();
                 }
-                return Promise.reject('Bug detected!');
+                return Promise.reject(`Bug detected! ${res.status}`);
             });
     }
 
@@ -27,10 +26,9 @@ export class Api {
         })
         .then((res) => {
             if (res.ok) {
-                console.log('resULT' +res);
                 return res.json();
             }
-            return Promise.reject('Bug detected!');
+            return Promise.reject(`Bug detected! ${res.status}`);
         });
     } 
 
@@ -41,10 +39,9 @@ export class Api {
         })
         .then((res) => {
             if (res.ok) {
-                console.log('resULT',res);
                 return res.json();
             }
-            return Promise.reject('Bug detected!');
+            return Promise.reject(`Bug detected! ${res.status}`);
         });
     } 
 
@@ -58,7 +55,7 @@ export class Api {
             if (res.ok) {
                 return res.json();
             }
-            return Promise.reject('Bug detected!');
+            return Promise.reject(`Bug detected! ${res.status}`);
         });
     }
 
@@ -71,21 +68,21 @@ export class Api {
             if (res.ok) {
                 return res.json();
             }
-            return Promise.reject('Bug detected!');
+            return Promise.reject(`Bug detected! ${res.status}`);
         });
     }
 
-    setAvatar(forUrl,linkObj){
+    setProfile(forUrl,data){
         return fetch(this._url+forUrl, {
             headers: this._headers,
             method: 'PATCH',
-            body: JSON.stringify(linkObj),
+            body: JSON.stringify(data),
         })
         .then((res) => {
             if (res.ok) {
                 return res.json();
             }
-            return Promise.reject('Bug detected!');
+            return Promise.reject(`Bug detected! ${res.status}`);
         });
     }
 }

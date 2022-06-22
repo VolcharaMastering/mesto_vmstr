@@ -19,6 +19,7 @@ const validationList = {
 const main = document.querySelector('.gallery');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
+const avatarForm =document.forms.addAvatar;
 const avatarImage = main.querySelector('.profile__avatar-image');
 
-export { token, main, profileForm, cardForm, validationList, avatarImage };
+export { token, main, profileForm, cardForm, validationList, avatarImage ,avatarForm};
