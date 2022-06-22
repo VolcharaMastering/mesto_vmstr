@@ -42,14 +42,17 @@ export class Card {
             else {
                 this._addLike(this._card._id);
             }
-            this._cardLike.classList.toggle('card__like_active');
         });
         this._cardImage.addEventListener('click', () => {
             this._handleCardClick(this._card.name, this._card.link);
         });
     }
 
-////-----Function for checking likes    ------///////
+    toggleLikeIcon() {
+        this._cardLike.classList.toggle('card__like_active');
+    }
+
+    ////-----Function for checking likes    ------///////
     _checkLikes = () => {
         if (this._card.likes.length > 0) {
             const isLike = this._card.likes.find(item => item._id == this._myId);

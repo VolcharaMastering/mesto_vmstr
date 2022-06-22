@@ -1,28 +1,18 @@
-import { token, main, profileForm, cardForm, validationList, avatarImage, avatarForm } from "./components/variables";
-import { Card } from "./components/Card";
-import { Section } from "./components/Section.js";
-import { FormValidator } from "./components/FormValidator.js";
-import { PopupWithImage } from "./components/PopupWithImage.js";
-import { PopupWithForm } from "./components/PopupWithForm.js";
-import { UserInfo } from "./components/UserInfo.js";
-import { Api } from "./components/Api.js";
-import "./styles/index.css";
-import { PopupConfirm } from "./components/PopupConfirm";
-
-
-////-----variables------///////
-const profileDescribe = {
-  name: '.profile__name',
-  about: '.profile__description'
-};
-const inputName = profileForm.elements.name;
-const inputnDescript = profileForm.elements.about;
-
-
-//-----buttons-------
-const profileOpenButton = main.querySelector('.profile__edit-button');
-const cardAddButton = main.querySelector('.profile__add-button');
-const avatarChangeButton = main.querySelector('.profile__avatar');
+import {
+  token, main, profileForm, cardForm,
+  validationList, avatarImage, avatarForm,
+  profileDescribe, inputName, inputnDescript,
+  profileOpenButton, cardAddButton, avatarChangeButton
+} from "../utills/constants";
+import { Card } from "../components/Card";
+import { Section } from "../components/Section.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
+import "./index.css";
+import { PopupConfirm } from "../components/PopupConfirm";
 
 
 //=======classes and callbacks=========
@@ -84,6 +74,7 @@ const addNewCard = (describe, myId) => {
         api.delLike(`cards/${cardId}/likes`)
           .then((item) => {
             card.updateLikes(item.likes);
+            card.toggleLikeIcon();
           })
           .catch((err) => {
             console.log(err);
@@ -92,6 +83,7 @@ const addNewCard = (describe, myId) => {
       addLike: (cardId) => {
         api.addLike(`cards/${cardId}/likes`)
           .then((item) => {
+            card.toggleLikeIcon();
             card.updateLikes(item.likes);
           })
           .catch((err) => {
@@ -111,13 +103,15 @@ const popupCardForm = new PopupWithForm(
   (nameAndLink) => {
     api.setCard('cards', nameAndLink)
       .then((card) => {
-        Promise.resolve(popupCardForm.changeSaveButton());
         const returnCard = addNewCard(card, card.owner._id);
         addGalary.prepends(returnCard);
         popupCardForm.close();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        popupCardForm.renderInitialText();
       });
   }
 );
@@ -128,12 +122,14 @@ const popupProfile = new PopupWithForm(
   (newInputs) => {
     api.setProfile('users/me', newInputs)
       .then((data) => {
-        Promise.resolve(popupProfile.changeSaveButton());
         userInfo.setUserInfo(data);
         popupProfile.close();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        popupProfile.renderInitialText();
       });
   }
 );
@@ -144,12 +140,14 @@ const popupAvatar = new PopupWithForm(
   (getAvatar) => {
     api.setProfile('users/me/avatar', getAvatar)
       .then((ava) => {
-        Promise.resolve(popupAvatar.changeSaveButton());
         setAvatar(ava.avatar);
         popupAvatar.close();
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        popupAvatar.renderInitialText();
       });
   }
 );
