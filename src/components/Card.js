@@ -1,6 +1,6 @@
 export class Card {
-    constructor(item, selectorTemplate, handleCardClick, {handleCardDelete, delLike, addLike}, myId) {
-        this._card=item;
+    constructor(item, selectorTemplate, handleCardClick, { handleCardDelete, delLike, addLike }, myId) {
+        this._card = item;
         this._selector = selectorTemplate;
         this._handleCardClick = handleCardClick;
         this._handleCardDelete = handleCardDelete;
@@ -20,7 +20,7 @@ export class Card {
     _deleteImage = () => {
         this._handleCardDelete(this._card);
     }
-    delCard(){
+    delCard() {
         this._cardElement.remove();
         this._cardElement = null;
 
@@ -48,16 +48,18 @@ export class Card {
             this._handleCardClick(this._card.name, this._card.link);
         });
     }
+
+////-----Function for checking likes    ------///////
     _checkLikes = () => {
         if (this._card.likes.length > 0) {
             const isLike = this._card.likes.find(item => item._id == this._myId);
             if (isLike) {
                 this._cardLike.classList.add('card__like_active');
                 this._like = true;
-            }            else {
+            } else {
                 this._like = false;
             }
-        }else {
+        } else {
             this._like = false;
         }
     }
@@ -65,15 +67,15 @@ export class Card {
         this._likeNumber.textContent = counter;
     };
 
-    updateLikes=(likes) =>{
-        this._card.likes=likes;
+    updateLikes = (likes) => {
+        this._card.likes = likes;
         this._checkLikes();
         this._addLikeCounter(this._card.likes.length)
     }
 
     makeCard() {
         this._cardTemplate = this._getTemplate();
-        this._cardElement=this._cardTemplate.querySelector('.card');
+        this._cardElement = this._cardTemplate.querySelector('.card');
         this._cardImage = this._cardTemplate.querySelector('.card__image');
         this._cardName = this._cardTemplate.querySelector('.card__name');
         this._cardRemove = this._cardTemplate.querySelector('.card__remove');

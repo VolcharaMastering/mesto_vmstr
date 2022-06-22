@@ -6,6 +6,7 @@ export class PopupWithForm extends Popup {
         this._form = this._popup.querySelector('.popup__inputs');
         this._inputArray = this._popup.querySelectorAll('.popup__input');
         this._getDataFromApi = getDataFromApi;
+        this._saveButton = this._popup.querySelector('.popup__save');
     }
 
     _getInputValues() {
@@ -13,8 +14,11 @@ export class PopupWithForm extends Popup {
         this._inputArray.forEach((input) => {
             newValues[input.name] = input.value;
         });
-        console.log('NEWValues=',newValues)
         return newValues;
+    }
+
+    changeSaveButton() {
+        this._saveButton.textContent = 'Сохранение...';
     }
 
     setEventListeners() {

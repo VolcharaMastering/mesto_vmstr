@@ -10,7 +10,7 @@ import "./styles/index.css";
 import { PopupConfirm } from "./components/PopupConfirm";
 
 
-
+////-----variables------///////
 const profileDescribe = {
   name: '.profile__name',
   about: '.profile__description'
@@ -25,25 +25,17 @@ const cardAddButton = main.querySelector('.profile__add-button');
 const avatarChangeButton = main.querySelector('.profile__avatar');
 
 
-
-//=======functions=========
-const handleCardClick = (cardName, cardLink) => {
-  bigImage.open(cardName, cardLink);
-}
-
-const setAvatar = (avatarLink) => {
-  avatarImage.setAttribute('src', avatarLink);
-}
-
 //=======classes and callbacks=========
 
-/////////--getting user info & cards from server--////////
 const bigImage = new PopupWithImage('.popup_big-image');
 bigImage.setEventListeners();
 
 const confirmPopup = new PopupConfirm('.popup_question');
 confirmPopup.setEventListeners();
 
+const userInfo = new UserInfo(profileDescribe);
+
+/////////--getting user info & cards from server--////////
 const api = new Api(token);
 api.getData('users/me')
   .then((usersInfo) => {
@@ -69,6 +61,8 @@ api.getData('users/me')
     console.log(err);
   });
 
+
+/////////----- Making every card -------////////
 const addNewCard = (describe, myId) => {
   const card = new Card(
     describe, '.template-card', handleCardClick,
@@ -110,11 +104,14 @@ const addNewCard = (describe, myId) => {
   return newReturnCard;
 }
 
+
+/////////----- Popup forms creating -------////////
 const popupCardForm = new PopupWithForm(
   '.popup_adder',
   (nameAndLink) => {
     api.setCard('cards', nameAndLink)
       .then((card) => {
+        Promise.resolve(popupCardForm.changeSaveButton());
         const returnCard = addNewCard(card, card.owner._id);
         addGalary.prepends(returnCard);
         popupCardForm.close();
@@ -126,13 +123,12 @@ const popupCardForm = new PopupWithForm(
 );
 popupCardForm.setEventListeners();
 
-const userInfo = new UserInfo(profileDescribe);
-
 const popupProfile = new PopupWithForm(
   '.popup_editor',
   (newInputs) => {
     api.setProfile('users/me', newInputs)
       .then((data) => {
+        Promise.resolve(popupProfile.changeSaveButton());
         userInfo.setUserInfo(data);
         popupProfile.close();
       })
@@ -140,7 +136,6 @@ const popupProfile = new PopupWithForm(
         console.log(err);
       });
   }
-
 );
 popupProfile.setEventListeners();
 
@@ -149,6 +144,7 @@ const popupAvatar = new PopupWithForm(
   (getAvatar) => {
     api.setProfile('users/me/avatar', getAvatar)
       .then((ava) => {
+        Promise.resolve(popupAvatar.changeSaveButton());
         setAvatar(ava.avatar);
         popupAvatar.close();
       })
@@ -158,6 +154,16 @@ const popupAvatar = new PopupWithForm(
   }
 );
 popupAvatar.setEventListeners();
+
+
+//=======functions=========
+const handleCardClick = (cardName, cardLink) => {
+  bigImage.open(cardName, cardLink);
+}
+
+const setAvatar = (avatarLink) => {
+  avatarImage.setAttribute('src', avatarLink);
+}
 
 //--------enable validation----------
 const profileFormValidate = new FormValidator(validationList, profileForm);
