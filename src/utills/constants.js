@@ -1,12 +1,3 @@
-const token = '9ccf29bd-3d67-4cc8-8c99-82c18d019a44';
-
-const userProfile = [
-  {
-    name: '.profile__name',
-    descript: '.profile__description'
-  }
-];
-
 const validationList = {
   activeForm: '.popup__inputs',
   formInput: '.popup__input',
@@ -20,11 +11,12 @@ const main = document.querySelector('.gallery');
 const profileForm = document.forms.profile;
 const cardForm = document.forms.addImage;
 const avatarForm = document.forms.addAvatar;
-const avatarImage = main.querySelector('.profile__avatar-image');
+// const avatarImage = main.querySelector('.profile__avatar-image');
 
 const profileDescribe = {
   name: '.profile__name',
-  about: '.profile__description'
+  about: '.profile__description',
+  avatar: '.profile__avatar-image'
 };
 const inputName = profileForm.elements.name;
 const inputnDescript = profileForm.elements.about;
@@ -45,8 +37,8 @@ const config={
 }
 
 export {
-  token, main, profileForm, cardForm,
-  validationList, avatarImage, avatarForm,
+  profileForm, cardForm,
+  validationList, avatarForm,
   profileDescribe, inputName, inputnDescript,
   profileOpenButton, cardAddButton, avatarChangeButton,
   config

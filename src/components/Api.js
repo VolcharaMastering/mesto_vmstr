@@ -1,7 +1,7 @@
 import { config } from "../utills/constants.js";
 
 export class Api {
-    constructor(token) {
+    constructor() {
         this._config = config;
     }
 
@@ -20,24 +20,24 @@ export class Api {
     }
 
 
-    delLike(forUrl){
-        return fetch(this._config.url+forUrl, {
+    delLike(cardId){
+        return fetch(this._config.url+`cards/${cardId}/likes`, {
             headers: this._config.headers,
             method: 'DELETE'
         })
         .then(this._checkResponse );
     } 
 
-    addLike(forUrl){
-        return fetch(this._config.url+forUrl, {
+    addLike(cardId){
+        return fetch(this._config.url+`cards/${cardId}/likes`, {
             headers: this._config.headers ,
             method: 'PUT'
         })
         .then(this._checkResponse );
     } 
 
-    setCard(forUrl,settings){
-        return fetch(this._config.url+forUrl, {
+    setCard(settings){
+        return fetch(this._config.url+'cards', {
             headers: this._config.headers ,
             method: 'POST',
             body: JSON.stringify(settings),
@@ -45,8 +45,8 @@ export class Api {
         .then(this._checkResponse );
     }
 
-    delCard(forUrl,cardId){
-        return fetch(this._config.url+forUrl+cardId, {
+    delCard(cardId){
+        return fetch(this._config.url+'cards/'+cardId, {
             headers: this._config.headers,
             method: 'DELETE'
         })
@@ -54,7 +54,7 @@ export class Api {
     }
 
     setProfile(forUrl,data){
-        return fetch(this._config.url+forUrl, {
+        return fetch(this._config.url+'users/me'+forUrl, {
             headers: this._config.headers,
             method: 'PATCH',
             body: JSON.stringify(data),

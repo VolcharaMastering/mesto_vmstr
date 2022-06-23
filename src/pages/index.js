@@ -1,6 +1,6 @@
 import {
-  token, main, profileForm, cardForm,
-  validationList, avatarImage, avatarForm,
+  profileForm, cardForm,
+  validationList, avatarForm,
   profileDescribe, inputName, inputnDescript,
   profileOpenButton, cardAddButton, avatarChangeButton
 } from "../utills/constants";
@@ -26,11 +26,10 @@ confirmPopup.setEventListeners();
 const userInfo = new UserInfo(profileDescribe);
 
 /////////--getting user info & cards from server--////////
-const api = new Api(token);
+const api = new Api();
 api.getData('users/me')
   .then((usersInfo) => {
     window.myId = usersInfo._id;
-    setAvatar(usersInfo.avatar);
     userInfo.setUserInfo(usersInfo);
     api.getData('cards')
       .then((dbCards) => {
@@ -60,7 +59,7 @@ const addNewCard = (describe, myId) => {
       handleCardDelete: (cardToDel) => {
         confirmPopup.open();
         confirmPopup.setSubmitAction(() => {
-          api.delCard('cards/', cardToDel._id)
+          api.delCard(cardToDel._id)
             .then(() => {
               card.delCard();
               confirmPopup.close();
@@ -71,17 +70,17 @@ const addNewCard = (describe, myId) => {
         });
       },
       delLike: (cardId) => {
-        api.delLike(`cards/${cardId}/likes`)
+        api.delLike(cardId)
           .then((item) => {
-            card.updateLikes(item.likes);
             card.toggleLikeIcon();
+            card.updateLikes(item.likes);
           })
           .catch((err) => {
             console.log(err);
           });
       },
       addLike: (cardId) => {
-        api.addLike(`cards/${cardId}/likes`)
+        api.addLike(cardId)
           .then((item) => {
             card.toggleLikeIcon();
             card.updateLikes(item.likes);
@@ -96,12 +95,11 @@ const addNewCard = (describe, myId) => {
   return newReturnCard;
 }
 
-
 /////////----- Popup forms creating -------////////
 const popupCardForm = new PopupWithForm(
   '.popup_adder',
   (nameAndLink) => {
-    api.setCard('cards', nameAndLink)
+    api.setCard(nameAndLink)
       .then((card) => {
         const returnCard = addNewCard(card, card.owner._id);
         addGalary.prepends(returnCard);
@@ -120,7 +118,7 @@ popupCardForm.setEventListeners();
 const popupProfile = new PopupWithForm(
   '.popup_editor',
   (newInputs) => {
-    api.setProfile('users/me', newInputs)
+    api.setProfile('',newInputs)
       .then((data) => {
         userInfo.setUserInfo(data);
         popupProfile.close();
@@ -138,9 +136,9 @@ popupProfile.setEventListeners();
 const popupAvatar = new PopupWithForm(
   '.popup_avatar',
   (getAvatar) => {
-    api.setProfile('users/me/avatar', getAvatar)
-      .then((ava) => {
-        setAvatar(ava.avatar);
+    api.setProfile('/avatar',getAvatar)
+      .then((data) => {
+        userInfo.setUserInfo(data);
         popupAvatar.close();
       })
       .catch((err) => {
@@ -157,10 +155,6 @@ popupAvatar.setEventListeners();
 //=======functions=========
 const handleCardClick = (cardName, cardLink) => {
   bigImage.open(cardName, cardLink);
-}
-
-const setAvatar = (avatarLink) => {
-  avatarImage.setAttribute('src', avatarLink);
 }
 
 //--------enable validation----------
