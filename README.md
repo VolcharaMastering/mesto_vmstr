@@ -11,12 +11,12 @@
 Изображения для проекта взяты с сайта [Unsplash](https://unsplash.com/) и сайта [Wikimedia Commons](https://commons.wikimedia.org/wiki/Main_Page).  
 
 **Стек технологий**    
-*Проект реализован на **HTML**, **CSS**,**JS**.*  
-*За семантику отвечает Методология БЭМ*  
-*За файловую структуру отвечает структура "Nested"*  
-* [Ссылка на макет в Figma](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)  
+Проект реализован на HTML, CSS, JS.  
+За семантику отвечает Методология БЭМ  
+За файловую структуру отвечает структура "Nested"  
+[Ссылка на макет в Figma](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)  
 
-***Сайт протестирован в браузерах Mozzila Firefox, Google Chrome (платформы linux и windows, Android) и Vivaldi (windows).***  
+*Сайт протестирован в браузерах Mozzila Firefox, Google Chrome (платформы linux и windows, Android) и Vivaldi (windows).*  
 
 **Запуск**   
 Запустить в браузере index.html.  
